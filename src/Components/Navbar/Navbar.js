@@ -2,23 +2,34 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import * as routes from '../constants/routes';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faSun} from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faSun} from '@fortawesome/free-regular-svg-icons';
+import { faFacebookSquare, faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
+
 
 const Bar = styled.div`
     background-color: rgb(230, 233, 235);
     height: 18vh;
     display: flex;
+    padding: 15px;
 
     .left-col, .right-col{
         flex: 0.5;
         display: flex;
     } 
+    .right-col {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+    /* .login-link {
+        align-self: flex-end;
+    } */
     .left-col > img {
         height: 13vh;
         width: auto;
         align-self: center;
-        margin: 10px;
     }
     .navbar-links {
         display: flex;
@@ -26,7 +37,6 @@ const Bar = styled.div`
         align-items: center;
         justify-content: flex-end;
         flex: 1;
-        margin: 10px;
     }
 
     .row-one, .row-two {
@@ -45,6 +55,12 @@ const Bar = styled.div`
         width: auto;
         margin-bottom: 10px;
     }
+    .sm-logo {
+        color: #777;
+        height: 5vh;
+        width: auto;
+        margin: 5px;
+    }
 `
 
 
@@ -57,7 +73,7 @@ const Navbar = (props)=>
             <FontAwesomeIcon icon={faSun} className="sun-logo" />
             <div className="row-one">
                 <NavLink to={routes.HOME} className="navbar-link">Home</NavLink>
-                <NavLink to={routes.MEMBER} className="navbar-link">Membership Information</NavLink>
+                <NavLink to={routes.MEMBER} className="navbar-link" onClick={props.showNewUserForm}>Membership Information</NavLink>
                 <NavLink to={routes.SCHEDULE} className="navbar-link">Schedule</NavLink>
             </div>
             <div className="row-two">
@@ -69,7 +85,18 @@ const Navbar = (props)=>
             </div>
         </div>
         <div className="right-col">
-            <NavLink to={routes.LOGIN} className="navbar-link">Login</NavLink>        
+            <div className="sm-links">
+                <FontAwesomeIcon icon={faFacebookSquare} className="sm-logo" />
+                <FontAwesomeIcon icon={faTwitterSquare} className="sm-logo" />            
+            </div>
+            {
+                props.logged
+                ? <div className="profile-logout">
+                    <NavLink to={routes.PROFILE} className="navbar-link">Profile</NavLink>
+                    <NavLink to={routes.HOME} className="navbar-link" onClick={props.logout}>Logout</NavLink>
+                </div> 
+                : <NavLink to={routes.MEMBER} className="navbar-link login-link" onClick={props.showLogin}>Login</NavLink>
+            }
         </div>
     </Bar>
 

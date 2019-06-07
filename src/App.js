@@ -4,11 +4,12 @@ import './App.css';
 import styled from 'styled-components';
 
 import * as routes from './Components/constants/routes';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, withRouter} from 'react-router-dom';
 
 import Navbar from './Components/Navbar/Navbar';
 import Home from './Components/Home/Home';
 import Member from './Components/Membership/Member';
+import { async } from 'q';
 
 
 
@@ -17,7 +18,8 @@ import Member from './Components/Membership/Member';
 class App extends Component {
   state = {
     logged: false,
-    currentUser: {}
+    existingUser: false,
+    currentUser: null
   }
   newAccount = async (info)=>{
     try {
@@ -36,6 +38,7 @@ class App extends Component {
           logged: true,
           currentUser: parsedData.user
         })
+        this.props.history.push('/');
       }
 
     } catch (error) {
@@ -59,19 +62,46 @@ class App extends Component {
           logged: true,
           currentUser: parsedData.user
         })
+        this.props.history.push('/');
       }
     } catch (error) {
       console.log(error)
     }
   }
+  logout = async ()=>{
+    const data = await fetch('/auth/logout', {
+      method:"POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const parsedData = await data.json();
+    console.log(parsedData)
+    this.setState({
+      logged: false,
+      currentUser: null
+    })
+  }
+  showLogin = ()=>{
+    this.setState({
+        existingUser: true
+    })
+  }
+  showNewUserForm = ()=>{
+    this.setState({
+        existingUser: false
+    })
+  }
   render(){
+    const {logged, existingUser, currentUser} = this.state
     return (
       <div className="App">
-        <Navbar />
+        <Navbar logged={logged} showLogin={this.showLogin} showNewUserForm={this.showNewUserForm} logout={this.logout} />
         <Switch>
           <Route exact path={routes.HOME} render={()=> <Home />} />
-          <Route exact path={routes.LOGIN} render={()=> <div>LOGIN PAGE</div>} />
-          <Route exact path={routes.MEMBER} render={()=> <Member newAccount={this.newAccount} login={this.login}/>} />
+          {/* <Route exact path={routes.LOGIN} render={()=> <div>LOGIN PAGE</div>} /> */}
+          <Route exact path={routes.MEMBER} render={()=> <Member newAccount={this.newAccount} login={this.login} existingUser={existingUser} showLogin={this.showLogin} showNewUserForm={this.showNewUserForm}/>} />
           <Route exact path={routes.SCHEDULE} render={()=> <div>SCHEDULE PAGE</div>} />
           <Route exact path={routes.MLIST} render={()=> <div>MONEY LIST PAGE</div>} />
           <Route exact path={routes.PAST} render={()=> <div>PAST RESULTS PAGE</div>} />
@@ -84,4 +114,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
