@@ -13,9 +13,35 @@ const ModalBox = styled.div`
         align-items: center;
         justify-content: center;
         z-index: 10;
+        animation: slideInUp 1s;
     }
     section {
         background-color: white;
+    }
+    @keyframes slideInUp {
+        from {
+            -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+            visibility: visible;
+        }
+
+        to {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+    @keyframes slideOutDown {
+        from {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        to {
+            visibility: hidden;
+            display: none;
+            -webkit-transform: translate3d(0, 100%, 0);
+            transform: translate3d(0, 100%, 0);
+        }
     }
 `
 const Modal = ({show, children})=>{

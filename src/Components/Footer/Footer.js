@@ -22,6 +22,9 @@ const FooterBar = styled.div`
         width: auto;
         margin: 5px;
     }
+    .btns {
+        color: pink
+    }
 `
 
 const Footer = (props)=>{
@@ -32,7 +35,7 @@ const Footer = (props)=>{
             <p>Site by parKaitlin</p>
             <div className="kp-links">
             <a href="https://github.com/parkaitlin"><FontAwesomeIcon icon={faGithubSquare} className="kp-link" /></a>          
-            <a href="https://www.linkedin.com/in/parkaitlin/"><FontAwesomeIcon icon={faLinkedin} className="kp-link" /></a>                    
+            <a href="https://www.linkedin.com/in/parkaitlin/"><FontAwesomeIcon icon={faLinkedin} className="kp-link" /></a>      
             </div>
         </FooterBar>
     )

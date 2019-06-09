@@ -24,10 +24,15 @@ const TourSchedule = (props)=>{
                     <div>{`$${tour.purse}`}</div>
                 </td>                                
                 <td className='add-info'>
-                    <div>First Start Time: {tour.startTime}</div>
-                    <a href='#' name="showPlayerList" onClick={props.showModal}>View Registered Players</a>
-                    <Link to={routes.LEADER}>View Leaderboard</Link>
-                    <div>Note to Players: {tour.notes}</div>
+                    <div>
+                        <div>First Start Time: {tour.startTime}</div>
+                        <a href='#' name="showPlayerList" onClick={props.showModal}>View Registered Players</a><br/>
+                        <Link to={routes.LEADER}>View Leaderboard</Link>
+                        <div>Note to Players: {tour.notes}</div>
+                    </div>
+                    <div className="tour-edit-btns">
+                        <button name='showEditModal' onClick={props.showModal}>Edit</button>
+                    </div>
                 </td>
             </tr>
         )

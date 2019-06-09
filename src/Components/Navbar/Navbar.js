@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faSun} from '@fortawesome/free-regular-svg-icons';
 import { faFacebookSquare, faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
 
+
 // font-family: 'Maven Pro', sans-serif;
 // font-family: 'Open Sans', sans-serif;
 
@@ -58,12 +59,24 @@ const Bar = styled.div`
         height: 5vh;
         width: auto;
         margin-bottom: 10px;
+        animation: rotate 2.5s;
+        animation-iteration-count: 2;
     }
     .sm-logo {
         color: #777;
         height: 5vh;
         width: auto;
         margin: 5px;
+    }
+    @keyframes rotate {
+        0%, 100% {
+            -webkit-transform: rotate(60deg);
+            transform: rotate(60deg);
+        }
+        50% {
+            -webkit-transform: rotate(-60deg);
+            transform: rotate(-60deg);
+        }
     }
 `
 
@@ -81,7 +94,7 @@ const Navbar = (props)=>
                 <NavLink to={routes.SCHEDULE} className="navbar-link">Schedule</NavLink>
             </div>
             <div className="row-two">
-                <NavLink to={routes.MLIST} className="navbar-link">Money List</NavLink>
+                <a href="http://thecactustour.com/money/19MoneyList.pdf" className="navbar-link">Money List</a>
                 <NavLink to={routes.PAST} className="navbar-link">Past Results</NavLink>
                 <NavLink to={routes.POLICY} className="navbar-link">Policies</NavLink>
                 <NavLink to={routes.CONTACT} className="navbar-link">Contact Us</NavLink>

@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import Footer from '../Footer/Footer';
 import AllStates from '../Membership/states';
@@ -26,6 +28,7 @@ const ScheduleTable = styled.div`
     }
     .entire-table {
         border: 2px solid #777;
+        background-attachment: fixed;
     }
     .table {
         width: 85vw;
@@ -54,6 +57,8 @@ const ScheduleTable = styled.div`
     }
     .add-info {
         padding: 5px 8px;
+        display: flex;
+        justify-content: space-between
     }
     label {
         font-size: 13px
@@ -71,6 +76,9 @@ const ScheduleTable = styled.div`
     .tour-info-input {
         padding: 10px;
     }
+    .tour-info {
+        padding: 10px;
+    }
     .city-input {
         width: 120px;
     }
@@ -86,6 +94,10 @@ const ScheduleTable = styled.div`
         width: 200px;
         font-family: 'Open Sans', sans-serif;        
     }
+    .tour-edit-btns {
+        align-self: flex-end;
+
+    }
 `
 
 class Schedule extends Component{
@@ -100,7 +112,8 @@ class Schedule extends Component{
         startTime: '',
         notes: '',
         tours: [],
-        showPlayerList: false
+        showPlayerList: false,
+        showEditModal: false
     }
     handleChange = (e)=>{
         this.setState({
@@ -204,7 +217,7 @@ class Schedule extends Component{
         })
     }
     render(){
-        const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, notes, tours, showPlayerList} = this.state
+        const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, notes, tours, showPlayerList, showEditModal} = this.state
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
 
         return(
@@ -247,7 +260,7 @@ class Schedule extends Component{
                                         <td className='purse'>
                                             <label>$</label> <input type='text' name='purse' placeholder='ex) 9,000' value={purse} onChange={this.handleChange} /><br/>
                                         </td>                                
-                                        <td className='add-info'>
+                                        <td className='new-add-info'>
                                             <label>First Start Time: </label>
                                             <input type='time' name='startTime' onChange={this.handleTime} /><br/>
                                             <label>Player Notes: </label><br/>
@@ -287,10 +300,12 @@ class Schedule extends Component{
                                             <div>$9,000</div>
                                         </td>                                
                                         <td className='add-info'>
-                                            <div>First Start Time:</div>
-                                            <div>View Registered Players</div>
-                                            <div>View Leaderboard</div>
-                                            <div>notes</div>
+                                            <div>
+                                                <div>First Start Time:</div>
+                                                <div>View Registered Players</div>
+                                                <div>View Leaderboard</div>
+                                                <div>notes</div>
+                                            </div>
                                         </td>
                                     </tr>
                                     <Tournaments tours={tours} showModal={this.showModal}/>
@@ -301,6 +316,10 @@ class Schedule extends Component{
                 <Modal show={showPlayerList}>
                     <h1>Registered Players</h1>
                     <button name="showPlayerList" onClick={this.hideModal}>X</button>
+                </Modal>
+                <Modal show={showEditModal}>
+                    <h1>Edit Tournament</h1>
+                    <button name="showEditModal" onClick={this.hideModal}>X</button>
                 </Modal>
                 {/* <Footer /> */}
             </>

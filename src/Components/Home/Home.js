@@ -5,6 +5,9 @@ import styled from 'styled-components';
 
 import Footer from '../Footer/Footer';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 AOS.init();
@@ -21,10 +24,9 @@ const HomePage = styled.div`
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        height: 80vh;
+        height: 76vh;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
     }
     .bgimg-2 {
@@ -49,7 +51,16 @@ const HomePage = styled.div`
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        height: 60vh
+        height: 60vh;
+    }
+    
+    .title-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 71vh;
+    
     }
     
     .cactus-tour {
@@ -64,7 +75,7 @@ const HomePage = styled.div`
         align-items: center;
         font-family: 'Maven Pro', sans-serif;
     }
-    .bgimg-1 > p {
+    .title-box > p {
         color: white;
         margin: 20px 0;
         font-family: 'Open Sans', sans-serif;
@@ -127,16 +138,38 @@ const HomePage = styled.div`
     .princeton {
         border: 10px solid black;
     }
+    .arrow {
+        color: white;
+        font-size: 30px;
+        animation: fadeInDown 2s;
+        animation-iteration-count: infinite;
+    }
+    @keyframes fadeInDown {
+        0%, 100% {
+            opacity: 0.5;
+            -webkit-transform: translate3d(0, -70%, 0);
+            transform: translate3d(0, -75%, 0);
+        }
+        50% {
+            opacity: 1;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
 `
 
 const Home = (props)=>{
     return(
         <HomePage>
             <div className='bgimg-1'>
-                <div className='cactus-tour'>
-                    <span>WELCOME TO THE CACTUS TOUR</span>
+                <div className='title-box'>
+                    <div className='cactus-tour'>
+                        <span>WELCOME TO THE CACTUS TOUR</span>
+                    </div>
+                    <p>The Tour for Women Golf Professionals on the West Coast</p>
                 </div>
-                <p>The Tour for Women Golf Professionals on the West Coast</p>
+                 <FontAwesomeIcon icon={faChevronDown} className="arrow" />
             </div>
             <div className="cactus-story">
                 <h3>OUR STORY</h3>
