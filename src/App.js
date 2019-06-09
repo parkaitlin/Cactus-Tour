@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 import './App.css';
-import styled from 'styled-components';
 
 import * as routes from './Components/constants/routes';
 import {Switch, Route, withRouter} from 'react-router-dom';
@@ -12,7 +11,6 @@ import Member from './Components/Membership/Member';
 import Profile from './Components/Profile/Profile';
 import Policies from './Components/Policies/Policies';
 import Schedule from './Components/Schedule/Schedule';
-
 
 
 
@@ -95,9 +93,6 @@ class App extends Component {
         existingUser: false
     })
   }
-  selectedTour = ()=>{
-    
-  }
   render(){
     const {logged, existingUser, currentUser} = this.state
     return (
@@ -114,7 +109,7 @@ class App extends Component {
           <Route exact path={routes.POLICY} render={()=> <Policies />} />
           <Route exact path={routes.CONTACT} render={()=> <div>CONTACT US PAGE</div>} />
           <Route exact path={routes.ABOUT} render={()=> <div>ABOUT PAGE</div>} />         
-          <Route exact path={routes.PLIST} render={()=> <div>players LIST</div>} />          
+          <Route exact path={routes.LEADER} render={()=> <div>LeaderBoard</div>} />          
         </Switch>
       </div>
     )

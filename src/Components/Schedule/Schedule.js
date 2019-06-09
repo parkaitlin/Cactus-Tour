@@ -4,15 +4,23 @@ import styled from 'styled-components';
 import Footer from '../Footer/Footer';
 import AllStates from '../Membership/states';
 import Tournaments from './tournaments';
+import Modal from './modal';
 // font-family: 'Maven Pro', sans-serif;
 // font-family: 'Open Sans', sans-serif;
 
 const ScheduleTable = styled.div`
-    min-height: 64vh;
-    padding: 50px 60px;
+    min-height: 82vh;
+    width: 100vw;
+    /* padding: 50px 60px;
     border-left: 100px solid rgb(230, 233, 235);
-    border-right: 100px solid rgb(230, 233, 235);
-
+    border-right: 100px solid rgb(230, 233, 235); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    z-index: -1;
+    padding-top: 50px;
+    
     h2 {
         font-family: 'Maven Pro', sans-serif;
     }
@@ -20,7 +28,7 @@ const ScheduleTable = styled.div`
         border: 2px solid #777;
     }
     .table {
-        width: 100%;
+        width: 85vw;
         background-color: rgb(230, 233, 235);
     }
     /* header row */
@@ -91,7 +99,8 @@ class Schedule extends Component{
         purse: '',
         startTime: '',
         notes: '',
-        tours: []
+        tours: [],
+        showPlayerList: false
     }
     handleChange = (e)=>{
         this.setState({
@@ -125,7 +134,7 @@ class Schedule extends Component{
             })
         } else {
             this.setState({
-                [e.target.name]: `${time} AM`
+                [e.target.name]: `${hour}:${timeArray[1]} AM`
             })
         }
     }
@@ -141,6 +150,7 @@ class Schedule extends Component{
             })
             const parsedData = await data.json()
             console.log(parsedData)
+            this.updateTours()
         } catch (error) {
             console.log(error)
         }
@@ -155,113 +165,144 @@ class Schedule extends Component{
             })
             const parsedData = await data.json();
             console.log(parsedData)
+            return parsedData
         } catch (error) {
             console.log(error)
         }
     }
     componentDidMount(){
-        this.getTours().then(data=>{
+        this.getTours().then((data)=>{
             this.setState({
-                tours: data
+                tours: data.tours
             })
         })
     }
+    updateTours = ()=>{
+        this.getTours().then((data)=>{
+            this.setState({
+                tours: data.tours,
+                eventId: 0,
+                eventStartDate: new Date(),
+                eventEndDate: new Date(),
+                venue: '',
+                city: '',
+                state: '',
+                purse: '',
+                startTime: '',
+                notes: '',
+            })
+        })
+    }
+    showModal = (e)=>{
+        this.setState({
+            [e.target.name]: true
+        })
+    }
+    hideModal = (e)=>{
+        this.setState({
+            [e.target.name]: false
+        })
+    }
     render(){
-        const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, notes, tours} = this.state
+        const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, notes, tours, showPlayerList} = this.state
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
 
         return(
             <>
                 <ScheduleTable>
-                    <div className='entire-table'>
-                        <table className='table'>
-                            <thead className="table-head">
-                                <tr className= "head-row">
-                                    <th>EVENT #</th>
-                                    <th>DATE</th>
-                                    <th>TOURNAMENT</th>
-                                    <th>PURSE</th>
-                                    <th>ADDITIONAL<br/>INFO</th>
-                                </tr>
-                            </thead>
-                            <tbody className="table-body">
-                                <tr className="tour-row">
-                                    <td className='event'>
-                                        <input type='number' name='eventId' value={eventId} onChange={this.handleChange} />
-                                    </td>
-                                    <td className='date'>
-                                        <label>Start Date: </label>
-                                        <input type='date' name='eventStartDate' onChange={this.handleDate} /><br/>
-                                        <label>End Date: </label>                                        
-                                        <input type='date' name='eventEndDate' onChange={this.handleDate} />
+                        <div className='entire-table'>
+                            <table className='table'>
+                                <thead className="table-head">
+                                    <tr className= "head-row">
+                                        <th>EVENT #</th>
+                                        <th>DATE</th>
+                                        <th>TOURNAMENT</th>
+                                        <th>PURSE</th>
+                                        <th>ADDITIONAL<br/>INFO</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="table-body">
+                                    <tr className="tour-row">
+                                        <td className='event'>
+                                            <input type='number' name='eventId' value={eventId} onChange={this.handleChange} />
+                                        </td>
+                                        <td className='date'>
+                                            <label>Start Date: </label>
+                                            <input type='date' name='eventStartDate' onChange={this.handleDate} /><br/>
+                                            <label>End Date: </label>                                        
+                                            <input type='date' name='eventEndDate' onChange={this.handleDate} />
 
-                                        <div>{months[eventStartDate.getMonth()]}</div>
-                                        <div>{`${eventStartDate.getDate() + 1} - ${eventEndDate.getDate() + 1}`}</div>
-                                    </td>
-                                    <td className='tour-info-input'>
-                                        <label>Venue:</label>
-                                        <input type='text' name='venue' value={venue} onChange={this.handleChange} /><br/>
-                                        <label>City:</label>                                        
-                                        <input className='city-input' type='text' name='city' value={city} onChange={this.handleChange} />
-                                        <label>State:</label>                                        
-                                        <input className='state-input' list='states' name='state' value={state} onChange={this.handleChange} />
-                                            <AllStates />
-                                    </td>
-                                    <td className='purse'>
-                                        <label>$</label> <input type='text' name='purse' placeholder='ex) 9,000' value={purse} onChange={this.handleChange} /><br/>
-                                    </td>                                
-                                    <td className='add-info'>
-                                        <label>First Start Time: </label>
-                                        <input type='time' name='startTime' onChange={this.handleTime} /><br/>
-                                        <label>Player Notes: </label><br/>
-                                        <input type='text' name='notes' value={notes} onChange={this.handleTime} /><br/>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <button className='add-tour-btn' onClick={this.addTour}>ADD TOURNAMENT</button>
-                    <h2>2019 Schedule</h2>
-                    <div className='entire-table'>
-                        <table className='table'>
-                            <thead className="table-head">
-                                <tr className= "head-row">
-                                    <th>EVENT #</th>
-                                    <th>DATE</th>
-                                    <th>TOURNAMENT</th>
-                                    <th>PURSE</th>
-                                    <th>ADDITIONAL<br/>INFO</th>
-                                </tr>
-                            </thead>
-                            <tbody className="table-body">
-                                <tr className="tour-row">
-                                    <td className='event'>
-                                        <div>1</div>
-                                    </td>
-                                    <td className='date'>
-                                        <div>JUNE</div>
-                                        <div>21 - 23</div>
-                                    </td>
-                                    <td className='tour-info'>
-                                        <div>some golf course</div>
-                                        <div>Phoenix, AZ</div>
-                                    </td>
-                                    <td className='purse'>
-                                        <div>$9,000</div>
-                                    </td>                                
-                                    <td className='add-info'>
-                                        <div>First Start Time:</div>
-                                        <div>View Registered Players</div>
-                                        <div>View Leaderboard</div>
-                                        <div>notes</div>
-                                    </td>
-                                </tr>
-                                <Tournaments tours={tours}/>
-                            </tbody>
-                        </table>
-                    </div>
+                                            <div>{months[eventStartDate.getMonth()]}</div>
+                                            <div>{`${eventStartDate.getDate() + 1} - ${eventEndDate.getDate() + 1}`}</div>
+                                        </td>
+                                        <td className='tour-info-input'>
+                                            <label>Venue:</label>
+                                            <input type='text' name='venue' value={venue} onChange={this.handleChange} /><br/>
+                                            <label>City:</label>                                        
+                                            <input className='city-input' type='text' name='city' value={city} onChange={this.handleChange} />
+                                            <label>State:</label>                                        
+                                            <input className='state-input' list='states' name='state' value={state} onChange={this.handleChange} />
+                                                <AllStates />
+                                        </td>
+                                        <td className='purse'>
+                                            <label>$</label> <input type='text' name='purse' placeholder='ex) 9,000' value={purse} onChange={this.handleChange} /><br/>
+                                        </td>                                
+                                        <td className='add-info'>
+                                            <label>First Start Time: </label>
+                                            <input type='time' name='startTime' onChange={this.handleTime} /><br/>
+                                            <label>Player Notes: </label><br/>
+                                            <input type='text' name='notes' value={notes} onChange={this.handleTime} /><br/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button className='add-tour-btn' onClick={this.addTour}>ADD TOURNAMENT</button>
+                        <h2>2019 Schedule</h2>
+                        <div className='entire-table'>
+                            <table className='table'>
+                                <thead className="table-head">
+                                    <tr className= "head-row">
+                                        <th>EVENT #</th>
+                                        <th>DATE</th>
+                                        <th>TOURNAMENT</th>
+                                        <th>PURSE</th>
+                                        <th>ADDITIONAL<br/>INFO</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="table-body">
+                                    <tr className="tour-row">
+                                        <td className='event'>
+                                            <div>1</div>
+                                        </td>
+                                        <td className='date'>
+                                            <div>JUNE</div>
+                                            <div>21 - 23</div>
+                                        </td>
+                                        <td className='tour-info'>
+                                            <div>some golf course</div>
+                                            <div>Phoenix, AZ</div>
+                                        </td>
+                                        <td className='purse'>
+                                            <div>$9,000</div>
+                                        </td>                                
+                                        <td className='add-info'>
+                                            <div>First Start Time:</div>
+                                            <div>View Registered Players</div>
+                                            <div>View Leaderboard</div>
+                                            <div>notes</div>
+                                        </td>
+                                    </tr>
+                                    <Tournaments tours={tours} showModal={this.showModal}/>
+                                </tbody>
+                            </table>
+                        </div>
                 </ScheduleTable>
-                <Footer />
+                <Modal show={showPlayerList}>
+                    <h1>Registered Players</h1>
+                    <button name="showPlayerList" onClick={this.hideModal}>X</button>
+                </Modal>
+                {/* <Footer /> */}
             </>
         )
     }

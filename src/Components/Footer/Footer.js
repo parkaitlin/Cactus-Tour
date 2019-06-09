@@ -13,6 +13,7 @@ const FooterBar = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
     height: 20vh;
+    width: 100vw;
     padding: 15px;
 
     .kp-link {
