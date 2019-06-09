@@ -7,6 +7,8 @@ export const POLICY = '/policies';
 export const CONTACT = '/contactus';
 export const ABOUT = '/about';
 export const PROFILE = '/profile';
+export const PLIST = '/playerslist';
+export const LEADER = '/leaderboard';
 
 
 

@@ -67,9 +67,12 @@ const NewUserForm = styled.div`
         font-size: 20px;
         color: white;
         background-color: #777;
-        margin: 20px 17vw;
         width: 10vw;
-        
+        margin: 20px 0;
+    }
+    .submit-btn {
+        margin-left: 17vw;
+        margin-right: 17vw;
     }
     form{
         display: flex;
@@ -268,7 +271,7 @@ class Member extends Component {
                                     <button>Check</button>
                                 </div>
                             }
-                            <button onClick={this.handleNewForm}>Submit</button>
+                            <button className="submit-btn" onClick={this.handleNewForm}>Submit</button>
                         </div>  
                     </NewUserForm>
                 }

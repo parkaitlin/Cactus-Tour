@@ -9,8 +9,9 @@ import {Switch, Route, withRouter} from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar';
 import Home from './Components/Home/Home';
 import Member from './Components/Membership/Member';
-import { async } from 'q';
-
+import Profile from './Components/Profile/Profile';
+import Policies from './Components/Policies/Policies';
+import Schedule from './Components/Schedule/Schedule';
 
 
 
@@ -19,7 +20,8 @@ class App extends Component {
   state = {
     logged: false,
     existingUser: false,
-    currentUser: null
+    currentUser: null,
+    selectedTour: ''
   }
   newAccount = async (info)=>{
     try {
@@ -93,6 +95,9 @@ class App extends Component {
         existingUser: false
     })
   }
+  selectedTour = ()=>{
+    
+  }
   render(){
     const {logged, existingUser, currentUser} = this.state
     return (
@@ -102,12 +107,14 @@ class App extends Component {
           <Route exact path={routes.HOME} render={()=> <Home />} />
           {/* <Route exact path={routes.LOGIN} render={()=> <div>LOGIN PAGE</div>} /> */}
           <Route exact path={routes.MEMBER} render={()=> <Member newAccount={this.newAccount} login={this.login} existingUser={existingUser} showLogin={this.showLogin} showNewUserForm={this.showNewUserForm}/>} />
-          <Route exact path={routes.SCHEDULE} render={()=> <div>SCHEDULE PAGE</div>} />
+          <Route exact path={routes.SCHEDULE} render={()=> <Schedule />} />
+          <Route exact path={routes.PROFILE} render={()=> <Profile />} />
           <Route exact path={routes.MLIST} render={()=> <div>MONEY LIST PAGE</div>} />
           <Route exact path={routes.PAST} render={()=> <div>PAST RESULTS PAGE</div>} />
-          <Route exact path={routes.POLICY} render={()=> <div>POLICIES PAGE</div>} />
+          <Route exact path={routes.POLICY} render={()=> <Policies />} />
           <Route exact path={routes.CONTACT} render={()=> <div>CONTACT US PAGE</div>} />
-          <Route exact path={routes.ABOUT} render={()=> <div>ABOUT PAGE</div>} />          
+          <Route exact path={routes.ABOUT} render={()=> <div>ABOUT PAGE</div>} />         
+          <Route exact path={routes.PLIST} render={()=> <div>players LIST</div>} />          
         </Switch>
       </div>
     )

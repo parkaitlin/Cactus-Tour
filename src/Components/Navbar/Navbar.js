@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faSun} from '@fortawesome/free-regular-svg-icons';
 import { faFacebookSquare, faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
 
+// font-family: 'Maven Pro', sans-serif;
+// font-family: 'Open Sans', sans-serif;
 
 const Bar = styled.div`
     background-color: rgb(230, 233, 235);
@@ -48,6 +50,8 @@ const Bar = styled.div`
         color: #777;
         text-decoration: none;
         margin: 5px 8px;
+        font-family: 'Open Sans', sans-serif;
+
     }
     .sun-logo {
         color: #777;
@@ -86,8 +90,8 @@ const Navbar = (props)=>
         </div>
         <div className="right-col">
             <div className="sm-links">
-                <FontAwesomeIcon icon={faFacebookSquare} className="sm-logo" />
-                <FontAwesomeIcon icon={faTwitterSquare} className="sm-logo" />            
+                <a href="https://www.facebook.com/The-Cactus-Tour-83099767055/"><FontAwesomeIcon icon={faFacebookSquare} className="sm-logo" /></a>
+                <a href="https://twitter.com/thecactustour"><FontAwesomeIcon icon={faTwitterSquare} className="sm-logo" /></a>            
             </div>
             {
                 props.logged

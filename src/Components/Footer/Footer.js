@@ -30,8 +30,8 @@ const Footer = (props)=>{
             <p>Copyright © Cactus Tour 2019. All Rights Reserved.</p>
             <p>Site by parKaitlin</p>
             <div className="kp-links">
-            <FontAwesomeIcon icon={faGithubSquare} className="kp-link" />            
-            <FontAwesomeIcon icon={faLinkedin} className="kp-link" />                        
+            <a href="https://github.com/parkaitlin"><FontAwesomeIcon icon={faGithubSquare} className="kp-link" /></a>          
+            <a href="https://www.linkedin.com/in/parkaitlin/"><FontAwesomeIcon icon={faLinkedin} className="kp-link" /></a>                    
             </div>
         </FooterBar>
     )
