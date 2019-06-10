@@ -102,8 +102,8 @@ class App extends Component {
           <Route exact path={routes.HOME} render={()=> <Home />} />
           {/* <Route exact path={routes.LOGIN} render={()=> <div>LOGIN PAGE</div>} /> */}
           <Route exact path={routes.MEMBER} render={()=> <Member newAccount={this.newAccount} login={this.login} existingUser={existingUser} showLogin={this.showLogin} showNewUserForm={this.showNewUserForm}/>} />
-          <Route exact path={routes.SCHEDULE} render={()=> <Schedule />} />
-          <Route exact path={routes.PROFILE} render={()=> <Profile />} />
+          <Route exact path={routes.SCHEDULE} render={()=> <Schedule user={currentUser}/>} />
+          <Route exact path={routes.PROFILE} render={()=> <Profile user={currentUser}/>} />
           <Route exact path={routes.PAST} render={()=> <div>PAST RESULTS PAGE</div>} />
           <Route exact path={routes.POLICY} render={()=> <Policies />} />
           <Route exact path={routes.CONTACT} render={()=> <div>CONTACT US PAGE</div>} />

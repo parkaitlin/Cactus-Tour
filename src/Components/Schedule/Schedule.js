@@ -14,9 +14,6 @@ import { async } from 'q';
 const ScheduleTable = styled.div`
     min-height: 82vh;
     width: 100vw;
-    /* padding: 50px 60px;
-    border-left: 100px solid rgb(230, 233, 235);
-    border-right: 100px solid rgb(230, 233, 235); */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,11 +21,7 @@ const ScheduleTable = styled.div`
     z-index: -1;
     padding-top: 50px;
     
-    h2 {
-        font-family: 'Maven Pro', sans-serif;
-    }
     .entire-table {
-        border: 2px solid #777;
         background-attachment: fixed;
     }
     .table {
@@ -92,15 +85,36 @@ const ScheduleTable = styled.div`
     .add-tour-btn {
         font-size: 20px;
         border-radius: 4px;
+        border: 2px solid #33357d;
         width: 200px;
-        font-family: 'Open Sans', sans-serif;        
+        font-family: 'Open Sans', sans-serif;  
+        color: #33357d;
+        font-weight: 600;
+        margin: 25px 0;      
     }
-    .tour-edit-btns {
+    .add-tour-btn:hover, .tour-edit-btn:hover {
+        background-color: #33357d;
+        color: #ffffff;
+    }
+    .tour-edit-btn {
         align-self: flex-end;
-
+        font-size: 15px;
+        border-radius: 4px;
+        border: 2px solid #33357d;
+        padding: 3px 6px;
+        font-family: 'Open Sans', sans-serif;  
+        color: #33357d;
+        font-weight: 600;
     }
     .notes-red {
         color: red
+    }
+    .title-year {
+        margin: 25px;
+        font-family: 'Maven Pro', sans-serif;
+        font-size: 50px;
+        color: #33357d;
+
     }
 `
 
@@ -257,56 +271,61 @@ class Schedule extends Component{
     }
     render(){
         const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, startTime, notes, status, tours, showPlayerList, showEditModal, eventNum} = this.state
-
+        const {user} = this.props
         return(
             <>
                 <ScheduleTable>
-                        <div className='entire-table'>
-                            <table className='table'>
-                                <thead className="table-head">
-                                    <tr className= "head-row">
-                                        <th>EVENT #</th>
-                                        <th>DATE</th>
-                                        <th>TOURNAMENT</th>
-                                        <th>PURSE</th>
-                                        <th>ADDITIONAL<br/>INFO</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="table-body">
-                                    <tr className="tour-row">
-                                        <td className='event'>
-                                            <input type='number' name='eventId' value={eventId} onChange={this.handleChange} readOnly/>
-                                        </td>
-                                        <td className='date'>
-                                            <label>Start Date: </label>
-                                            <input type='date' name='eventStartDate' onChange={this.handleChange} /><br/>
-                                            <label>End Date: </label>                                        
-                                            <input type='date' name='eventEndDate' onChange={this.handleChange} />
-                                        </td>
-                                        <td className='tour-info-input'>
-                                            <label>Venue:</label>
-                                            <input type='text' name='venue' value={venue} onChange={this.handleChange} /><br/>
-                                            <label>City:</label>                                        
-                                            <input className='city-input' type='text' name='city' value={city} onChange={this.handleChange} />
-                                            <label>State:</label>                                        
-                                            <input className='state-input' list='states' name='state' value={state} onChange={this.handleChange} />
-                                                <AllStates />
-                                        </td>
-                                        <td className='purse'>
-                                            <label>$</label> <input type='text' name='purse' placeholder='ex) 9,000' value={purse} onChange={this.handleChange} /><br/>
-                                        </td>                                
-                                        <td className='new-add-info'>
-                                            <label>First Start Time: </label>
-                                            <input type='time' name='startTime' onChange={this.handleChange} /><br/>
-                                            <label>Player Notes: </label><br/>
-                                            <input type='text' name='notes' value={notes} onChange={this.handleChange} /><br/>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <button className='add-tour-btn' onClick={this.addTour}>ADD TOURNAMENT</button>
-                        <h2>2019 Schedule</h2>
+                        {
+                            !user
+                            ? <></>
+                            : user.admin 
+                            && <><div className='entire-table'>
+                                <table className='table'>
+                                    <thead className="table-head">
+                                        <tr className= "head-row">
+                                            <th>EVENT #</th>
+                                            <th>DATE</th>
+                                            <th>TOURNAMENT</th>
+                                            <th>PURSE</th>
+                                            <th>ADDITIONAL<br/>INFO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="table-body">
+                                        <tr className="tour-row">
+                                            <td className='event'>
+                                                <input type='number' name='eventId' value={eventId} onChange={this.handleChange} readOnly/>
+                                            </td>
+                                            <td className='date'>
+                                                <label>Start Date: </label>
+                                                <input type='date' name='eventStartDate' onChange={this.handleChange} /><br/>
+                                                <label>End Date: </label>                                        
+                                                <input type='date' name='eventEndDate' onChange={this.handleChange} />
+                                            </td>
+                                            <td className='tour-info-input'>
+                                                <label>Venue:</label>
+                                                <input type='text' name='venue' value={venue} onChange={this.handleChange} /><br/>
+                                                <label>City:</label>                                        
+                                                <input className='city-input' type='text' name='city' value={city} onChange={this.handleChange} />
+                                                <label>State:</label>                                        
+                                                <input className='state-input' list='states' name='state' value={state} onChange={this.handleChange} />
+                                                    <AllStates />
+                                            </td>
+                                            <td className='purse'>
+                                                <label>$</label> <input type='text' name='purse' placeholder='ex) 9,000' value={purse} onChange={this.handleChange} /><br/>
+                                            </td>                                
+                                            <td className='new-add-info'>
+                                                <label>First Start Time: </label>
+                                                <input type='time' name='startTime' onChange={this.handleChange} /><br/>
+                                                <label>Player Notes: </label><br/>
+                                                <input type='text' name='notes' value={notes} onChange={this.handleChange} /><br/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button className='add-tour-btn' onClick={this.addTour}>Add Tournament</button></>
+                        }
+                        <h2 className="title-year">2019 Schedule</h2>
                         <div className='entire-table'>
                             <table className='table'>
                                 <thead className="table-head">
@@ -343,13 +362,13 @@ class Schedule extends Component{
                                             </div>
                                         </td>
                                     </tr>
-                                    <Tournaments tours={tours} showModal={this.showModal}/>
+                                    <Tournaments tours={tours} showModal={this.showModal} user={user}/>
                                 </tbody>
                             </table>
                         </div>
                 </ScheduleTable>
                 <Modal show={showPlayerList}>
-                    <button name="showPlayerList" onClick={this.hideModal}>X</button>
+                    <button name="showPlayerList" className="exit-btn" onClick={this.hideModal}>X</button>
                     <h1>Registered Players</h1>
                     <div className='player-table'>
                         <table className='table'>
@@ -359,11 +378,21 @@ class Schedule extends Component{
                                     <th>Hometown</th>
                                 </tr>
                             </thead>
+                            <tbody className="table-body">
+                                <tr className="tour-row">
+                                    <td className='player-name'>
+                                        <div>Kaitlin Park</div>
+                                    </td>
+                                    <td className='player-hometown'>
+                                        <div>Tustin, CA</div>
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>    
                 </Modal>
                 <Modal show={showEditModal}>
-                    <button name="showEditModal" onClick={this.hideModal}>X</button>
+                    <button name="showEditModal" className="exit-btn" onClick={this.hideModal}>X</button>
                     <h1>Edit Tournament</h1>
                     <div className='entire-table'>
                             <table className='table'>
@@ -414,7 +443,7 @@ class Schedule extends Component{
                             </table>
                         </div>
                         <button onClick={this.editEvent}>Save Changes</button>
-                        {status && <button onClick={this.cancelEvent}>Cancel Event</button>}
+                        {status && <button className='cancel-btn' onClick={this.cancelEvent}>Cancel Event</button>}
                 </Modal>
                 {/* <Footer /> */}
             </>

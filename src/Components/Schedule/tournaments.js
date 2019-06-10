@@ -48,13 +48,16 @@ const TourSchedule = (props)=>{
                 <td className='add-info'>
                     <div>
                         <div>First Start Time: {handleTime(tour.startTime)}</div>
-                        <a href='#' name="showPlayerList" onClick={props.showModal}>View Registered Players</a><br/>
+                        <a href='#' name="showPlayerList" onClick={(e)=>props.showModal(e, i)}>View Registered Players</a><br/>
                         <Link to={routes.LEADER}>View Leaderboard</Link>
                         <div>Note to Players: <span className="notes-red">{tour.notes}</span></div>
                     </div>
-                    <div className="tour-edit-btns">
-                        <button name='showEditModal' onClick={(e)=>props.showModal(e, i)}>Edit</button>
-                    </div>
+                    {
+                    !props.user
+                    ? <></>
+                    : props.user.admin
+                    && <button name='showEditModal' className="tour-edit-btn" onClick={(e)=>props.showModal(e, i)}>Edit</button>
+                    }
                 </td>
             </tr>
         )
