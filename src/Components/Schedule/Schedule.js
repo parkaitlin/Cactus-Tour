@@ -99,6 +99,9 @@ const ScheduleTable = styled.div`
         align-self: flex-end;
 
     }
+    .notes-red {
+        color: red
+    }
 `
 
 class Schedule extends Component{
@@ -124,11 +127,50 @@ class Schedule extends Component{
             [e.target.name]: e.target.value
         })
     }
-    cancelEvent = ()=>{
+    handleActivate = (e)=>{
         this.setState({
+            [e.target.name]: e.target.value,
+            notes: ''
+        })
+    }
+    editEvent = async ()=>{
+        try {
+            const data = await fetch(`/tour/${this.state.selectedTour._id}`, {
+                method: "PUT",
+                credentials: "include",
+                body: JSON.stringify(this.state),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            const parsedData = await data.json();
+            console.log(parsedData);
+            this.updateTours();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    cancelEvent = async ()=>{
+        await this.setState({
             status: false,
             notes: "CANCELLED"
         })
+        try {
+            const data = await fetch(`/tour/${this.state.selectedTour._id}`, {
+                method: "PUT",
+                credentials: "include",
+                body: JSON.stringify({status: this.state.status, notes: this.state.notes}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            const parsedData = await data.json();
+            console.log(parsedData);
+            this.updateTours();
+
+        } catch (error) {
+            console.log(error)
+        }
     }
     addTour = async()=>{
         try {
@@ -173,21 +215,26 @@ class Schedule extends Component{
     updateTours = ()=>{
         this.getTours().then((data)=>{
             this.setState({
-                tours: data.tours,
                 eventId: 0,
-                eventStartDate: new Date(),
-                eventEndDate: new Date(),
+                eventStartDate: '',
+                eventEndDate: '',
                 venue: '',
                 city: '',
                 state: '',
                 purse: '',
                 startTime: '',
                 notes: '',
+                status: true,
+                tours: data.tours,
+                showPlayerList: false,
+                showEditModal: false,
+                selectedTour: {},
+                eventNum: 0
             })
         })
     }
     showModal = (e, index)=>{
-        const {eventStartDate, eventEndDate, venue, city, state, purse, startTime} = this.state.tours[index]
+        const {eventStartDate, eventEndDate, venue, city, state, purse, startTime, notes, status} = this.state.tours[index]
         this.setState({
             [e.target.name]: true,
             selectedTour: this.state.tours[index],
@@ -198,7 +245,9 @@ class Schedule extends Component{
             city: city,
             state: state,
             purse: purse,
-            startTime: startTime
+            startTime: startTime,
+            notes: notes,
+            status: status
         })
     }
     hideModal = (e)=>{
@@ -207,7 +256,7 @@ class Schedule extends Component{
         })
     }
     render(){
-        const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, startTime, notes, tours, showPlayerList, showEditModal, eventNum} = this.state
+        const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, startTime, notes, status, tours, showPlayerList, showEditModal, eventNum} = this.state
 
         return(
             <>
@@ -356,14 +405,16 @@ class Schedule extends Component{
                                                 <input type='time' name='startTime' value={startTime} onChange={this.handleChange} /><br/>
                                                 <label>Player Notes: </label><br/>
                                                 <input type='text' name='notes' value={notes} onChange={this.handleChange} /><br/>
+                                                {!status && <label>Set Event Status to Active</label>}                                                
+                                                {!status && <input type='checkbox' name='status' value={true} onChange={this.handleActivate} />}
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <button>Save Changes</button>
-                        <button onClick={this.cancelEvent}>Cancel Event</button>
+                        <button onClick={this.editEvent}>Save Changes</button>
+                        {status && <button onClick={this.cancelEvent}>Cancel Event</button>}
                 </Modal>
                 {/* <Footer /> */}
             </>
