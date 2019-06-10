@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer';
 import AllStates from '../Membership/states';
 import Tournaments from './tournaments';
 import Modal from './modal';
+import { async } from 'q';
 // font-family: 'Maven Pro', sans-serif;
 // font-family: 'Open Sans', sans-serif;
 
@@ -103,53 +104,31 @@ const ScheduleTable = styled.div`
 class Schedule extends Component{
     state = {
         eventId: 0,
-        eventStartDate: new Date(),
-        eventEndDate: new Date(),
+        eventStartDate: '',
+        eventEndDate: '',
         venue: '',
         city: '',
         state: '',
         purse: '',
         startTime: '',
         notes: '',
+        status: true,
         tours: [],
         showPlayerList: false,
-        showEditModal: false
+        showEditModal: false,
+        selectedTour: {},
+        eventNum: 0
     }
     handleChange = (e)=>{
         this.setState({
             [e.target.name]: e.target.value
         })
     }
-    handleDate = (e)=>{
-        const date = new Date(e.target.value)
-        console.log(date)
+    cancelEvent = ()=>{
         this.setState({
-            [e.target.name]: date
+            status: false,
+            notes: "CANCELLED"
         })
-    }
-    handleTime = (e)=>{
-        const time = e.target.value;
-        const timeArray = time.split(':');
-        const hour = parseInt(timeArray[0]);
-        console.log(hour)
-
-        if(hour === 0){
-            this.setState({
-                [e.target.name]: `12:${timeArray[1]} AM`
-            })
-        } else if(hour === 12){
-            this.setState({
-                [e.target.name]: `${time} PM`
-            }) 
-        } else if(hour > 12){
-            this.setState({
-                [e.target.name]: `${hour - 12}:${timeArray[1]} PM`
-            })
-        } else {
-            this.setState({
-                [e.target.name]: `${hour}:${timeArray[1]} AM`
-            })
-        }
     }
     addTour = async()=>{
         try {
@@ -186,7 +165,8 @@ class Schedule extends Component{
     componentDidMount(){
         this.getTours().then((data)=>{
             this.setState({
-                tours: data.tours
+                tours: data.tours,
+                eventId: data.tours.length + 1
             })
         })
     }
@@ -206,9 +186,19 @@ class Schedule extends Component{
             })
         })
     }
-    showModal = (e)=>{
+    showModal = (e, index)=>{
+        const {eventStartDate, eventEndDate, venue, city, state, purse, startTime} = this.state.tours[index]
         this.setState({
-            [e.target.name]: true
+            [e.target.name]: true,
+            selectedTour: this.state.tours[index],
+            eventNum: index + 1,
+            eventStartDate: eventStartDate,
+            eventEndDate: eventEndDate,
+            venue: venue,
+            city: city,
+            state: state,
+            purse: purse,
+            startTime: startTime
         })
     }
     hideModal = (e)=>{
@@ -217,8 +207,7 @@ class Schedule extends Component{
         })
     }
     render(){
-        const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, notes, tours, showPlayerList, showEditModal} = this.state
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+        const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, startTime, notes, tours, showPlayerList, showEditModal, eventNum} = this.state
 
         return(
             <>
@@ -237,16 +226,13 @@ class Schedule extends Component{
                                 <tbody className="table-body">
                                     <tr className="tour-row">
                                         <td className='event'>
-                                            <input type='number' name='eventId' value={eventId} onChange={this.handleChange} />
+                                            <input type='number' name='eventId' value={eventId} onChange={this.handleChange} readOnly/>
                                         </td>
                                         <td className='date'>
                                             <label>Start Date: </label>
-                                            <input type='date' name='eventStartDate' onChange={this.handleDate} /><br/>
+                                            <input type='date' name='eventStartDate' onChange={this.handleChange} /><br/>
                                             <label>End Date: </label>                                        
-                                            <input type='date' name='eventEndDate' onChange={this.handleDate} />
-
-                                            <div>{months[eventStartDate.getMonth()]}</div>
-                                            <div>{`${eventStartDate.getDate() + 1} - ${eventEndDate.getDate() + 1}`}</div>
+                                            <input type='date' name='eventEndDate' onChange={this.handleChange} />
                                         </td>
                                         <td className='tour-info-input'>
                                             <label>Venue:</label>
@@ -262,9 +248,9 @@ class Schedule extends Component{
                                         </td>                                
                                         <td className='new-add-info'>
                                             <label>First Start Time: </label>
-                                            <input type='time' name='startTime' onChange={this.handleTime} /><br/>
+                                            <input type='time' name='startTime' onChange={this.handleChange} /><br/>
                                             <label>Player Notes: </label><br/>
-                                            <input type='text' name='notes' value={notes} onChange={this.handleTime} /><br/>
+                                            <input type='text' name='notes' value={notes} onChange={this.handleChange} /><br/>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -314,12 +300,70 @@ class Schedule extends Component{
                         </div>
                 </ScheduleTable>
                 <Modal show={showPlayerList}>
-                    <h1>Registered Players</h1>
                     <button name="showPlayerList" onClick={this.hideModal}>X</button>
+                    <h1>Registered Players</h1>
+                    <div className='player-table'>
+                        <table className='table'>
+                            <thead className="table-head">
+                                <tr className= "head-row">
+                                    <th>Player</th>
+                                    <th>Hometown</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>    
                 </Modal>
                 <Modal show={showEditModal}>
-                    <h1>Edit Tournament</h1>
                     <button name="showEditModal" onClick={this.hideModal}>X</button>
+                    <h1>Edit Tournament</h1>
+                    <div className='entire-table'>
+                            <table className='table'>
+                                <thead className="table-head">
+                                    <tr className= "head-row">
+                                        <th>EVENT #</th>
+                                        <th>DATE</th>
+                                        <th>TOURNAMENT</th>
+                                        <th>PURSE</th>
+                                        <th>ADDITIONAL<br/>INFO</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="table-body">
+                                    <tr className="tour-row">
+                                        <td className='event'>
+                                            <div>{eventNum}</div>
+                                        </td>
+                                        <td className='date'>
+                                            <label>Start Date: </label>
+                                            <input type='date' name='eventStartDate' value={eventStartDate} onChange={this.handleChange} /><br/>
+                                            <label>End Date: </label>                                        
+                                            <input type='date' name='eventEndDate' value={eventEndDate} onChange={this.handleChange} />
+                                        </td>
+                                        <td className='tour-info'>
+                                            <label>Venue:</label>
+                                            <input type='text' name='venue' value={venue} onChange={this.handleChange} /><br/>
+                                            <label>City:</label>                                        
+                                            <input className='city-input' type='text' name='city' value={city} onChange={this.handleChange} />
+                                            <label>State:</label>                                        
+                                            <input className='state-input' list='states' name='state' value={state} onChange={this.handleChange} />
+                                                <AllStates />
+                                        </td>
+                                        <td className='purse'>
+                                            <label>$</label> <input type='text' name='purse' value={purse} onChange={this.handleChange} /><br/>
+                                        </td>                                
+                                        <td className='add-info'>
+                                            <div>
+                                                <label>First Start Time: </label>
+                                                <input type='time' name='startTime' value={startTime} onChange={this.handleChange} /><br/>
+                                                <label>Player Notes: </label><br/>
+                                                <input type='text' name='notes' value={notes} onChange={this.handleChange} /><br/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button>Save Changes</button>
+                        <button onClick={this.cancelEvent}>Cancel Event</button>
                 </Modal>
                 {/* <Footer /> */}
             </>

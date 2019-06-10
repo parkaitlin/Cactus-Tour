@@ -30,19 +30,7 @@ const ModalBox = styled.div`
             transform: translate3d(0, 0, 0);
         }
     }
-    @keyframes slideOutDown {
-        from {
-            -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-        }
 
-        to {
-            visibility: hidden;
-            display: none;
-            -webkit-transform: translate3d(0, 100%, 0);
-            transform: translate3d(0, 100%, 0);
-        }
-    }
 `
 const Modal = ({show, children})=>{
     const showOrHide = show ? 'show-modal' : 'hide-modal'
