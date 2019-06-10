@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 
 import Footer from '../Footer/Footer';
 import AllStates from '../Membership/states';
 import Tournaments from './tournaments';
 import Modal from './modal';
-import { async } from 'q';
-// font-family: 'Maven Pro', sans-serif;
-// font-family: 'Open Sans', sans-serif;
+
 
 const ScheduleTable = styled.div`
     min-height: 82vh;

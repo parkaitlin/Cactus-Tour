@@ -233,21 +233,14 @@ class Member extends Component {
                             <p>Already have an account? <span onClick={this.props.showLogin}>Login here.</span></p>
                             <form>
                                 <p>Login Information</p>
-                                {/* <label>Email: </label> */}
                                 <input type='text' name='email' placeholder='email' value={email} onChange={this.handleChange} />
-                                {/* <label>Password: </label>                     */}
                                 <input type='password' name='password' placeholder='password' value={password} onChange={this.handleChange} />
-                                {/* <label>Confirm Password: </label>                     */}
                                 <input type='password' name='confirmPassword' placeholder='confirm password' value={confirmPassword} onChange={this.handleChange} />
                                 <p>Player Information</p>
-                                {/* <label>First Name: </label>                     */}
                                 <input type='text' name='firstName' placeholder='first name' value={firstName} onChange={this.handleChange} />
-                                {/* <label>Last Name: </label>                     */}
                                 <input type='text' name='lastName' placeholder='last name' value={lastName} onChange={this.handleChange} />
                                 <div className="hometown-state">
-                                    {/* <label>Hometown: </label>                     */}
                                     <input type='text' name='hometown' placeholder='hometown' value={hometown} onChange={this.handleChange} />
-                                    {/* <label>State: </label>                     */}
                                     <input className="state-input" list='states' name='state' placeholder='state' value={state} onChange={this.handleChange} />
                                         <AllStates />
                                 </div>
