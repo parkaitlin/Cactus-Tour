@@ -7,13 +7,14 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import Modal from '../Schedule/modal';
 import Footer from '../Footer/Footer';
 import AllStates from '../Membership/states';
-import { async } from 'q';
+import Upcoming from './upcoming';
+
 
 // font-family: 'Maven Pro', sans-serif;
 // font-family: 'Open Sans', sans-serif;
 
 const ProfilePage = styled.div`
-    height: 100vh;
+    min-height: 82vh;
     position: absolute;
     z-index: -1;
     
@@ -88,6 +89,75 @@ const ProfilePage = styled.div`
         background-color: #ffffff;
         color: #777;
     }
+        
+    .entire-table {
+        background-attachment: fixed;
+    }
+    .table {
+        width: 85vw;
+        background-color: rgb(230, 233, 235);
+    }
+    /* header row */
+    .head-row {
+        height: 50px;
+        background-color: #1e204b;
+    }
+    th {
+        border: 2px solid #1e204b;
+        color: #ffffff;
+        font-family: 'Maven Pro', sans-serif;
+    }
+    /* tournament rows */
+    .tour-row {
+        background-color: #ffffff;
+    }
+    td > div {
+        color: #1e204b;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .event, .date, .purse {
+        text-align: center;
+    }
+    .add-info {
+        padding: 5px 8px;
+        display: flex;
+        justify-content: space-between
+    }
+    label {
+        font-size: 13px
+    }
+    input {
+        font-size: 13px;
+        border-radius: 5px;
+        margin: 6px 3px;
+        text-align: center;
+    }
+    .event > input {
+        width: 40px;
+        text-align: inherit;
+    }
+    .tour-info-input {
+        padding: 10px;
+    }
+    .tour-info {
+        padding: 10px;
+    }
+    .city-input {
+        width: 120px;
+    }
+    .state-input {
+        width: 45px;
+    }
+    .purse > input {
+        width: 80px;
+    }
+    .upcoming {
+        margin: 25px;
+        font-family: 'Maven Pro', sans-serif;
+        font-size: 50px;
+        color: #33357d;
+    }
+
 `
 
 class PlayerProfile extends Component {
@@ -110,14 +180,24 @@ class PlayerProfile extends Component {
     }
     getRegisteredTours = async()=>{
         try {
-            const data = await this.props.user
-            console.log(data)
+            const data = await fetch('/tour/upcoming', {
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            const parsedData = await data.json();
+            return parsedData
         } catch (error) {
             console.log(error)
         }
     }
     componentDidMount(){
-        this.getRegisteredTours()
+        this.getRegisteredTours().then((data)=>{
+            this.setState({
+                upcomingTours: data.allTours
+            })
+        })
     }
     showModal = (e)=>{
         this.setState({
@@ -149,8 +229,8 @@ class PlayerProfile extends Component {
         }
     }
     render(){
-        const {user} = this.props
-        const {editProfileModal, firstName, lastName, email, password, hometown, state, member, status}= this.state
+        const {user, logged} = this.props
+        const {editProfileModal, firstName, lastName, email, hometown, state, member, upcomingTours}= this.state
         const joined = new Date(user.joined)
         const playerStatus = user.status === 'professional' ? '(PRO)' : '(AM)'
         const memberStatus = user.member && 'Member'
@@ -179,10 +259,25 @@ class PlayerProfile extends Component {
                     </div>
                 </div>
                 <div className='upcoming-tour'>
-                    <h2>Upcoming Tournaments</h2>
-                   {/* a div with all past results */}
+                    <h2 className="upcoming">Upcoming Tournaments</h2>
+                        <div className='entire-table'>
+                            <table className='table'>
+                                <thead className="table-head">
+                                    <tr className= "head-row">
+                                        <th>EVENT #</th>
+                                        <th>DATE</th>
+                                        <th>TOURNAMENT</th>
+                                        <th>PURSE</th>
+                                        <th>ADDITIONAL<br/>INFO</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="table-body">
+                                    <Upcoming upcomingTours={upcomingTours} user={user} logged={logged} />
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
-                <div className='results'>
+                <div className='upcoming'>
                     <h2>Results</h2>
                 </div>
                 <Footer />

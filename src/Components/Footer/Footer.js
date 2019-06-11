@@ -15,6 +15,8 @@ const FooterBar = styled.div`
     height: 20vh;
     width: 100vw;
     padding: 15px;
+    display: flex;
+    flex-direction: column;
 
     .kp-link {
         color: #777;
@@ -31,11 +33,12 @@ const Footer = (props)=>{
     return(
 
         <FooterBar>
-            <p>Copyright © Cactus Tour 2019. All Rights Reserved.</p>
-            <p>Site by parKaitlin</p>
+            <div className="copyright"></div>
+                <p>Copyright © The Cactus Tour 2019. All Rights Reserved.</p>
             <div className="kp-links">
-            <a href="https://github.com/parkaitlin"><FontAwesomeIcon icon={faGithubSquare} className="kp-link" /></a>          
-            <a href="https://www.linkedin.com/in/parkaitlin/"><FontAwesomeIcon icon={faLinkedin} className="kp-link" /></a>      
+                <p>Site by parKaitlin</p>
+                <a href="https://github.com/parkaitlin"><FontAwesomeIcon icon={faGithubSquare} className="kp-link" /></a>          
+                <a href="https://www.linkedin.com/in/parkaitlin/"><FontAwesomeIcon icon={faLinkedin} className="kp-link" /></a>      
             </div>
         </FooterBar>
     )

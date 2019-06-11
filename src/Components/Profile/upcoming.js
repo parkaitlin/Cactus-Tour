@@ -27,8 +27,8 @@ const handleDate = (date)=>{
     const dateNum = new Date(date).getDate()
     return dateNum + 1
 }
-const TourSchedule = (props)=>{
-    const tournaments = props.tours.map((tour, i)=>{
+const UpcomingTours = (props)=>{
+    const tournaments = props.upcomingTours.map((tour, i)=>{
         return(
             <tr className="tour-row" key={tour._id}>
                 <td className='event'>
@@ -51,17 +51,7 @@ const TourSchedule = (props)=>{
                         <a href='#' name="showPlayerList" onClick={(e)=>props.showModal(e, i)}>View Registered Players</a><br/>
                         <Link to={routes.LEADER}>View Leaderboard</Link>
                         <div>Note to Players: <span className="notes-red">{tour.notes}</span></div>
-                    </div>
-                    {
-                    !props.user
-                    ? <></>
-                    : props.user.admin
-                    && <button name='showEditModal' className="tour-edit-btn" onClick={(e)=>props.showModal(e, i)}>Edit</button>
-                    }
-                    {
-                        props.logged
-                        && <button className="tour-register-btn" onClick={(e)=>props.eventRegistration(e, i)}>Register</button>
-                    }                    
+                    </div>                 
                 </td>
             </tr>
         )
@@ -71,4 +61,4 @@ const TourSchedule = (props)=>{
     )
 }
 
-export default TourSchedule;
+export default UpcomingTours;

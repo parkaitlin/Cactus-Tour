@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 
-import Footer from '../Footer/Footer';
 import AllStates from '../Membership/states';
-import Tournaments from './tournaments';
+import Tournaments from './Tournaments';
 import Modal from './modal';
-
 
 const ScheduleTable = styled.div`
     min-height: 82vh;
@@ -89,11 +87,11 @@ const ScheduleTable = styled.div`
         font-weight: 600;
         margin: 25px 0;      
     }
-    .add-tour-btn:hover, .tour-edit-btn:hover {
+    .add-tour-btn:hover, .tour-edit-btn:hover, .tour-register-btn:hover {
         background-color: #33357d;
         color: #ffffff;
     }
-    .tour-edit-btn {
+    .tour-edit-btn, .tour-register-btn {
         align-self: flex-end;
         font-size: 15px;
         border-radius: 4px;
@@ -130,7 +128,7 @@ class Schedule extends Component{
         tours: [],
         showPlayerList: false,
         showEditModal: false,
-        selectedTour: {},
+        selectedTour: [],
         eventNum: 0
     }
     handleChange = (e)=>{
@@ -219,9 +217,10 @@ class Schedule extends Component{
         this.getTours().then((data)=>{
             this.setState({
                 tours: data.tours,
-                eventId: data.tours.length + 1
+                eventId: data.tours.length + 1,
             })
         })
+        console.log(this.state.selectedTour)
     }
     updateTours = ()=>{
         this.getTours().then((data)=>{
@@ -266,9 +265,41 @@ class Schedule extends Component{
             [e.target.name]: false
         })
     }
-    render(){
-        const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, startTime, notes, status, tours, showPlayerList, showEditModal, eventNum} = this.state
+    eventRegistration = async(e, index)=>{
+        await this.setState({
+            selectedTour: this.state.tours[index]
+        })
         const {user} = this.props
+        let registered = false
+
+        for(let i = 0; i < user.registeredTours.length - 1; i++){
+            console.log('loop', this.state.selectedTour)
+            if(this.state.selectedTour.registeredPlayers.length === 0 || user.registeredTours.length === 0){
+                registered = false
+            } else if(this.state.selectedTour.registeredPlayers[i]._id == user._id){
+                registered = true
+                console.log('You are already registered for the selected tournament')
+            }
+        }
+        if(!registered){
+            try {
+            const data = await fetch(`/tour/registration/${this.state.selectedTour._id}`, {
+                credentials: 'include',
+                headers:{
+                    "Content-Type": "application/json"
+                }
+            })
+            const parsedData = await data.json();
+            this.updateTours()
+            this.props.updateCurrentUser(parsedData.user)
+            } catch (error) {
+            console.log(error)
+            } 
+        }
+    }
+    render(){
+        const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, startTime, notes, status, tours, showPlayerList, showEditModal, eventNum, selectedTour} = this.state
+        const {user, logged} = this.props
         return(
             <>
                 <ScheduleTable>
@@ -335,31 +366,7 @@ class Schedule extends Component{
                                     </tr>
                                 </thead>
                                 <tbody className="table-body">
-                                    <tr className="tour-row">
-                                        <td className='event'>
-                                            <div>1</div>
-                                        </td>
-                                        <td className='date'>
-                                            <div>JUNE</div>
-                                            <div>21 - 23</div>
-                                        </td>
-                                        <td className='tour-info'>
-                                            <div>some golf course</div>
-                                            <div>Phoenix, AZ</div>
-                                        </td>
-                                        <td className='purse'>
-                                            <div>$9,000</div>
-                                        </td>                                
-                                        <td className='add-info'>
-                                            <div>
-                                                <div>First Start Time:</div>
-                                                <div>View Registered Players</div>
-                                                <div>View Leaderboard</div>
-                                                <div>notes</div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <Tournaments tours={tours} showModal={this.showModal} user={user}/>
+                                    <Tournaments tours={tours} showModal={this.showModal} user={user} eventRegistration={this.eventRegistration} logged={logged} />
                                 </tbody>
                             </table>
                         </div>
@@ -384,6 +391,21 @@ class Schedule extends Component{
                                         <div>Tustin, CA</div>
                                     </td>
                                 </tr>
+                                {
+                                    showPlayerList
+                                    && selectedTour.registeredPlayers.map((player, i)=>{
+                                        return(
+                                        <tr className="tour-row" key={player._id}>
+                                            <td className='player-name'>
+                                                <div>{`${player.firstName} ${player.lastName}`}</div>
+                                            </td>
+                                            <td className='player-hometown'>
+                                                <div>{`${player.hometown}, ${player.state}`}</div>
+                                            </td>
+                                        </tr>
+                                        )
+                                    })
+                                }
                             </tbody>
                         </table>
                     </div>    
