@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 
 import AllStates from '../Membership/states';
-// import Tournaments from './Tournaments';
+import Tournaments from './Tournaments';
 import Modal from './modal';
 
 const ScheduleTable = styled.div`
@@ -15,6 +15,7 @@ const ScheduleTable = styled.div`
     position: absolute;
     z-index: -1;
     padding-top: 50px;
+    margin-bottom: 5em;
     
     .entire-table {
         background-attachment: fixed;
@@ -366,7 +367,7 @@ class Schedule extends Component{
                                     </tr>
                                 </thead>
                                 <tbody className="table-body">
-                                    {/* <Tournaments tours={tours} showModal={this.showModal} user={user} eventRegistration={this.eventRegistration} logged={logged} /> */}
+                                    <Tournaments tours={tours} showModal={this.showModal} user={user} eventRegistration={this.eventRegistration} logged={logged} />
                                 </tbody>
                             </table>
                         </div>
