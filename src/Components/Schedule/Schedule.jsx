@@ -226,7 +226,7 @@ class Schedule extends Component{
     updateTours = ()=>{
         this.getTours().then((data)=>{
             this.setState({
-                eventId: 0,
+                eventId: data.tours.length + 1,
                 eventStartDate: '',
                 eventEndDate: '',
                 venue: '',
