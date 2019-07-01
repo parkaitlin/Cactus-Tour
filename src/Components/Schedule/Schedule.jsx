@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 
 import AllStates from '../Membership/states';
-import Tournaments from './Tournaments';
+import Tournaments from './tournaments';
 import Modal from './modal';
 
 const ScheduleTable = styled.div`
