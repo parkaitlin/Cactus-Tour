@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import './App.css';
 
@@ -14,13 +14,13 @@ import Schedule from './Components/Schedule/Schedule';
 
 
 
-class App extends Component {
+class App extends React.Component {
   state = {
     logged: false,
     existingUser: false,
     currentUser: null,
   }
-  newAccount = async (info)=>{
+  register = async (info)=>{
     try {
       const data = await fetch('/auth/new', {
         method: "POST",
