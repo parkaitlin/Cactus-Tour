@@ -1,20 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
-
 import AllStates from '../Membership/states';
 import Tournaments from './tournaments';
 import Modal from './modal';
 
+const Page = styled.div`
+    min-height: 120em;
+`
 const ScheduleTable = styled.div`
-    min-height: 82vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: absolute;
-    z-index: -1;
-    padding-top: 50px;
+    padding-top: 3em;
     margin-bottom: 5em;
     
     .entire-table {
@@ -33,6 +32,7 @@ const ScheduleTable = styled.div`
         border: 2px solid #1e204b;
         color: #ffffff;
         font-family: 'Maven Pro', sans-serif;
+        min-width: 2.5em;
     }
     /* tournament rows */
     .tour-row {
@@ -49,6 +49,12 @@ const ScheduleTable = styled.div`
         padding: 5px 8px;
         display: flex;
         justify-content: space-between
+        > div > button {
+            color: blue;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid blue;
+        }
     }
     label {
         font-size: 13px
@@ -114,7 +120,7 @@ const ScheduleTable = styled.div`
     }
 `
 
-class Schedule extends Component{
+export default class Schedule extends React.Component {
     state = {
         eventId: 0,
         eventStartDate: '',
@@ -153,9 +159,9 @@ class Schedule extends Component{
                     "Content-Type": "application/json"
                 }
             })
-            const parsedData = await data.json();
-            console.log(parsedData);
+            const parsedData = data.json()
             this.updateTours();
+            return parsedData
         } catch (error) {
             console.log(error)
         }
@@ -174,10 +180,9 @@ class Schedule extends Component{
                     "Content-Type": "application/json"
                 }
             })
-            const parsedData = await data.json();
-            console.log(parsedData);
+            const parsedData = data.json()
             this.updateTours();
-
+            return parsedData
         } catch (error) {
             console.log(error)
         }
@@ -192,9 +197,9 @@ class Schedule extends Component{
                     "Content-Type": "application/json"
                 }
             })
-            const parsedData = await data.json()
-            console.log(parsedData)
+            const parsedData = data.json()
             this.updateTours()
+            return parsedData
         } catch (error) {
             console.log(error)
         }
@@ -208,7 +213,6 @@ class Schedule extends Component{
                 }
             })
             const parsedData = await data.json();
-            console.log(parsedData)
             return parsedData
         } catch (error) {
             console.log(error)
@@ -221,7 +225,6 @@ class Schedule extends Component{
                 eventId: data.tours.length + 1,
             })
         })
-        console.log(this.state.selectedTour)
     }
     updateTours = ()=>{
         this.getTours().then((data)=>{
@@ -274,10 +277,9 @@ class Schedule extends Component{
         let registered = false
 
         for(let i = 0; i < user.registeredTours.length - 1; i++){
-            console.log('loop', this.state.selectedTour)
             if(this.state.selectedTour.registeredPlayers.length === 0 || user.registeredTours.length === 0){
                 registered = false
-            } else if(this.state.selectedTour.registeredPlayers[i]._id == user._id){
+            } else if(this.state.selectedTour.registeredPlayers[i]._id === user._id){
                 registered = true
                 console.log('You are already registered for the selected tournament')
             }
@@ -302,7 +304,7 @@ class Schedule extends Component{
         const {eventId, eventStartDate, eventEndDate, venue, city, state, purse, startTime, notes, status, tours, showPlayerList, showEditModal, eventNum, selectedTour} = this.state
         const {user, logged} = this.props
         return(
-            <>
+            <Page>
                 <ScheduleTable>
                         {
                             !user
@@ -465,10 +467,7 @@ class Schedule extends Component{
                         <button onClick={this.editEvent}>Save Changes</button>
                         {status && <button className='cancel-btn' onClick={this.cancelEvent}>Cancel Event</button>}
                 </Modal>
-                {/* <Footer /> */}
-            </>
+            </Page>
         )
     }
 }
-
-export default Schedule;

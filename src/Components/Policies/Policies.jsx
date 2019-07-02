@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Footer from '../Footer/Footer';
-
 const PolicyBox = styled.div`
     min-height: 64vh;
     margin: 25px 60px;
@@ -148,10 +146,7 @@ const Policies = (props)=>{
                     <span>MISCELLANEOUS: </span>
                     <p>The tournament policies and procedures of The Cactus Tour are subject to revision at any time without notice.</p>
                 </div>
-
-
             </PolicyBox>
-            <Footer />
         </>
     )
 }

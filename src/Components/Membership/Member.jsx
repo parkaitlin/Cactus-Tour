@@ -1,17 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
 import AllStates from './states';
-import Footer from '../Footer/Footer';
-
-const MemberPage = styled.div`
-    height: 82vh;
-`
-
 
 const NewUserForm = styled.div`
     display:flex;
-    height: 64vh;
+    max-height: 83vh;
     padding: 20px;
 
     span {
@@ -56,7 +49,7 @@ const NewUserForm = styled.div`
     .new-member-form {
         border-left: 2px solid #84dcac;
         padding: 15px;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
     }
     form > p {
@@ -102,7 +95,7 @@ const NewUserForm = styled.div`
 `
 
 const LoginBox = styled.div`
-    height: 64vh;
+    /* height: 64vh; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,7 +103,7 @@ const LoginBox = styled.div`
     .login-box {
         border-left: 2px solid black;
         border-right: 2px solid black;
-        height: 50vh;
+        height: 28em;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -142,7 +135,7 @@ const LoginBox = styled.div`
     
 `
 
-class Member extends Component {
+export default class Member extends React.Component {
     state = {
         firstName: '',
         lastName: '',
@@ -170,7 +163,7 @@ class Member extends Component {
         const {firstName, lastName, email, password, hometown, state, member, confirmPassword} = this.state
         const {existingUser} = this.props
         return(
-            <MemberPage>
+            <div>
                 {
                     existingUser
                     ? <LoginBox>
@@ -268,10 +261,7 @@ class Member extends Component {
                         </div>  
                     </NewUserForm>
                 }
-                <Footer />
-            </MemberPage>
+            </div>
         )
     }
 }
-
-export default Member;

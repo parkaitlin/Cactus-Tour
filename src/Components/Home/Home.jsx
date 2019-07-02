@@ -2,20 +2,13 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import * as routes from '../constants/routes';
 import styled from 'styled-components';
-
-import Footer from '../Footer/Footer';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 AOS.init();
 
-// font-family: 'Maven Pro', sans-serif;
-// font-family: 'Open Sans', sans-serif;
 const HomePage = styled.div`
-    height: 100vh;
     .bgimg-1 {
         background-image: url('imgs/christoph-von-gellhorn-748872-unsplash.jpg');
         position: relative;
@@ -156,7 +149,6 @@ const HomePage = styled.div`
             transform: translate3d(0, 0, 0);
         }
     }
-
 `
 
 const Home = (props)=>{
@@ -208,7 +200,7 @@ const Home = (props)=>{
             <div className='bgimg-3'>
             </div>
             
-            <Footer />
+            {/* <Footer /> */}
         </HomePage>
     )
 }

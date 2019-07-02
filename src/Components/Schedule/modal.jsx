@@ -8,11 +8,12 @@ const ModalBox = styled.div`
     .show-modal {
         height: 100vh;
         width: 100vw;
+        position: relative;
         background-color: rgba(0, 0, 0, 0.7);
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 10;
+        z-index: 1;
         animation: slideInUp 1s;
     }
     section {

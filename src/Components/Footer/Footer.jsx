@@ -3,12 +3,10 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithubSquare, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
-
 const FooterBar = styled.div`
     background-image: url('imgs/footerimg.jpg');
     position: relative;
     opacity: 0.7;
-    /* background-attachment: fixed; */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

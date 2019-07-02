@@ -29,7 +29,7 @@ const Bar = styled.div`
     /* .login-link {
         align-self: flex-end;
     } */
-    .left-col > img {
+    .left-col > .navbar-link > img {
         height: 13vh;
         width: auto;
         align-self: center;
@@ -84,21 +84,20 @@ const Bar = styled.div`
 const Navbar = (props)=>
     <Bar>
         <div className="left-col">
-            <img src="imgs/cactuslogo2.gif" alt="The Cactus Tour"></img>
+            <NavLink to={routes.HOME} className="navbar-link"><img src="imgs/cactuslogo2.gif" alt="The Cactus Tour"></img></NavLink>
         </div>
         <div className="navbar-links">
             <FontAwesomeIcon icon={faSun} className="sun-logo" />
             <div className="row-one">
-                <NavLink to={routes.HOME} className="navbar-link">Home</NavLink>
                 <NavLink to={routes.MEMBER} className="navbar-link" onClick={props.showNewUserForm}>Membership Information</NavLink>
                 <NavLink to={routes.SCHEDULE} className="navbar-link">Schedule</NavLink>
             </div>
             <div className="row-two">
                 <a href="http://thecactustour.com/money/19MoneyList.pdf" className="navbar-link">Money List</a>
-                <NavLink to={routes.PAST} className="navbar-link">Past Results</NavLink>
+                {/* <NavLink to={routes.PAST} className="navbar-link">Past Results</NavLink> */}
                 <NavLink to={routes.POLICY} className="navbar-link">Policies</NavLink>
                 <NavLink to={routes.CONTACT} className="navbar-link">Contact Us</NavLink>
-                <NavLink to={routes.ABOUT} className="navbar-link">About</NavLink>
+                {/* <NavLink to={routes.ABOUT} className="navbar-link">About</NavLink> */}
             </div>
         </div>
         <div className="right-col">

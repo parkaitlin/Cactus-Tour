@@ -1,6 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
-import * as routes from '../constants/routes';
 
 const handleTime = (start)=>{
     const time = start;
@@ -48,8 +46,8 @@ const TourSchedule = (props)=>{
                 <td className='add-info'>
                     <div>
                         <div>First Start Time: {handleTime(tour.startTime)}</div>
-                        <a href='#' name="showPlayerList" onClick={(e)=>props.showModal(e, i)}>View Registered Players</a><br/>
-                        <Link to={routes.LEADER}>View Leaderboard</Link>
+                        <button name="showPlayerList" onClick={(e)=>props.showModal(e, i)}>View Registered Players</button><br/>
+                        {/* <Link to={routes.LEADER}>View Leaderboard</Link> */}
                         <div>Note to Players: <span className="notes-red">{tour.notes}</span></div>
                     </div>
                     {

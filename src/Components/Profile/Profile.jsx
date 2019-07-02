@@ -1,17 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-
 import Modal from '../Schedule/modal';
 import Footer from '../Footer/Footer';
 import AllStates from '../Membership/states';
 import Upcoming from './upcoming';
-
-
-// font-family: 'Maven Pro', sans-serif;
-// font-family: 'Open Sans', sans-serif;
 
 const ProfilePage = styled.div`
     min-height: 82vh;
@@ -122,6 +116,12 @@ const ProfilePage = styled.div`
         padding: 5px 8px;
         display: flex;
         justify-content: space-between
+        > div > button {
+            color: blue;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid blue;
+        }
     }
     label {
         font-size: 13px
@@ -160,7 +160,7 @@ const ProfilePage = styled.div`
 
 `
 
-class PlayerProfile extends Component {
+export default class PlayerProfile extends React.Component {
     state = {
         upcomingTours: [],
         editProfileModal: false,
@@ -323,5 +323,3 @@ class PlayerProfile extends Component {
         )
     }
 }
-
-export default PlayerProfile;
