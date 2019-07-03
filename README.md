@@ -2,7 +2,7 @@
 
 ![Home page](/public/imgs/cactusTour.png)
 
-This project is a redesign of a web application I used during my golf career. The Cactus Tour is a women's professional golf tour based in Arizona, and is geared towards golfers striving to play on the LPGA Tour, which is one of the largest and most competitive women's golf tour in the world. 
+This project is a redesign of a web application I used during my golf career. The Cactus Tour is a women's professional golf tour based in Arizona, and is geared towards golfers striving to play on the LPGA Tour, which is one of the largest and most competitive women's golf tour in the world. [Current Website](http://thecactustour.com/)
 
 I wanted to focus on functionalities for the player and an adminstrator as well as the redesign to improve the user experience. And as part of my process, I reached out to the tour director of the Cactus Tour and challenged myself to implement features and functionalities he wanted to see in the redesign.
 
