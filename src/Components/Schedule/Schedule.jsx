@@ -29,7 +29,7 @@ const ScheduleTable = styled.div`
         border: 2px solid #1e204b;
         color: #ffffff;
         font-family: 'Maven Pro', sans-serif;
-        min-width: 2.5em;
+        min-width: 6em;
     }
     /* tournament rows */
     .tour-row {
