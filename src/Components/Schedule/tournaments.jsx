@@ -57,7 +57,7 @@ const TourSchedule = (props)=>{
                     && <button name='showEditModal' className="tour-edit-btn" onClick={(e)=>props.showModal(e, i)}>Edit</button>
                     }
                     {
-                        props.logged
+                        props.logged && new Date(tour.eventStartDate) > new Date()
                         && <button className="tour-register-btn" onClick={(e)=>props.eventRegistration(e, i)}>Register</button>
                     }                    
                 </td>

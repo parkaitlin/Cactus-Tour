@@ -105,7 +105,7 @@ const Navbar = (props)=>
                     <NavLink to={routes.PROFILE} className="navbar-link">Profile</NavLink>
                     <NavLink to={routes.HOME} className="navbar-link" onClick={props.logout}>Logout</NavLink>
                 </div> 
-                : <NavLink to={routes.MEMBER} className="navbar-link login-link" onClick={props.showLogin}>Login</NavLink>
+                : <NavLink to={routes.MEMBER} className="navbar-link login-link" onClick={props.showLogin}>Player Portal</NavLink>
             }
         </div>
     </Bar>
