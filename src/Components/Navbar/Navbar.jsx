@@ -7,9 +7,6 @@ import {faSun} from '@fortawesome/free-regular-svg-icons';
 import { faFacebookSquare, faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
 
 
-// font-family: 'Maven Pro', sans-serif;
-// font-family: 'Open Sans', sans-serif;
-
 const Bar = styled.div`
     background-color: rgb(230, 233, 235);
     height: 18vh;
@@ -42,7 +39,7 @@ const Bar = styled.div`
         flex: 1;
     }
 
-    .row-one, .row-two {
+    .row {
         width: 100%;
         display: flex;
         justify-content: center;
@@ -50,15 +47,14 @@ const Bar = styled.div`
     .navbar-link {
         color: #777;
         text-decoration: none;
-        margin: 5px 8px;
+        margin: 0 .7em;
         font-family: 'Open Sans', sans-serif;
 
     }
     .sun-logo {
         color: #777;
-        height: 5vh;
-        width: auto;
-        margin-bottom: 10px;
+        font-size: 2.5em;
+        margin-bottom: 1em;
         animation: rotate 2.5s;
         animation-iteration-count: 2;
     }
@@ -88,11 +84,9 @@ const Navbar = (props)=>
         </div>
         <div className="navbar-links">
             <FontAwesomeIcon icon={faSun} className="sun-logo" />
-            <div className="row-one">
+            <div className="row">
                 <NavLink to={routes.MEMBER} className="navbar-link" onClick={props.showNewUserForm}>Membership Information</NavLink>
                 <NavLink to={routes.SCHEDULE} className="navbar-link">Schedule</NavLink>
-            </div>
-            <div className="row-two">
                 <a href="http://thecactustour.com/money/19MoneyList.pdf" className="navbar-link">Money List</a>
                 {/* <NavLink to={routes.PAST} className="navbar-link">Past Results</NavLink> */}
                 <NavLink to={routes.POLICY} className="navbar-link">Policies</NavLink>

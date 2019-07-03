@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Footer from '../Footer/Footer';
 
 const PolicyBox = styled.div`
     min-height: 64vh;
@@ -22,14 +23,21 @@ const PolicyBox = styled.div`
         margin: 10px 18px;;
     }
     .pop-title {
-        margin-left: 30px;
+        margin-left: 3em;
+        font-weight: 700;
     }
     .pop {
-        margin-bottom: 10px;
-        margin-left: 30px;
+        font-weight: 400;
+        text-align: justify;
+        display: flex;
+        flex-flow: row wrap;
+        margin-left: 3em;
     }
-    ul.pop {
-        margin: 10px 60px;
+    .pop-list {
+        margin-left: 4em;
+        > li {
+            list-style: none;
+        }
     }
 `
 
@@ -99,28 +107,27 @@ const Policies = (props)=>{
                 </div>
                 <div>
                     <span>PACE OF PLAY: </span>
-                    <p>The player shall play without undue delay and in accordance with any pace of play guidelines which may be laid down by the Committee,” and thereafter prescribes penalties for slow play.  In order to prevent any such penalty we suggest that you review carefully the following guidelines. The Cactus Tour Committee consists of the Tour Director and the host course PGA professional.<br/><br/>
-                        <span className="pop-title">Allotted Time: </span>
-                        <p className="pop">When play is in groups of two, groups will be required to play at a 3 hour and 15 minute pace for the 18-hole round. When play is in groups of three, groups will be required to play at a 3 hour and 45 minute pace for the 18-hole round. When play is in groups of four, groups will be required to play at a 4 hour and 15 minute pace for 18 holes. </p>
-                        <span className="pop-title">Definition of "Out of Position": </span>
-                        <p className="pop">The first group to start will be considered out of position if, at any time during the round, the group is behind the prescribed schedule. Any following group will be considered out of position if it (a) is taking more than the allotted time to play and (b) reaches the tee of a par-3 hole and the preceding group has cleared the next tee; reaches the tee of a par-4 hole and the putting green is clear; or reaches the tee of a par-5 hole when the preceding group is on the putting green. Both (a) and (b) must apply for a group to be out of position.</p>
-                        <span className="pop-title">Group Out of Position: </span>
-                        <p className="pop">If a group is out of position, a Tour Rules Official will monitor them.  A group out of position will NOT be informed when they are being monitored and timed.  However, a player may ask a Rules Official if his group is being monitored and timed.</p>
-                        <span className="pop-title">Timing: </span>
-                        <p className="pop"> If a group is out of position, it may be monitored or timed for failure to comply with this pace of play guideline. When a group is out of position each player in the group is expected to play any stroke within 40 seconds after timing of the player’s stroke begins. Other than on the putting green, timing of a player’s stroke will begin when she has had reasonable opportunity to reach her ball, it is her turn to play and she can play without interference or distraction. Time spent determining yardage will count as part of the time taken for the next stroke. On the putting green, timing will begin after a player has been allowed a reasonable amount of time to lift, clean and replace her ball, repair her ball mark and other ball marks on her line of putt and remove loose impediments from her line of putt. Time spent looking at the line from beyond the hole and/or behind the ball will count as part of the time taken for the next stroke. <br/> A player is permitted 40 seconds to play a stroke. An extra 10 seconds (for a total of 50 seconds) will be allowed for: </p>
-                        <ul className="pop">
+                    <p>The player shall play without undue delay and in accordance with any pace of play guidelines which may be laid down by the Committee,” and thereafter prescribes penalties for slow play.  In order to prevent any such penalty we suggest that you review carefully the following guidelines. The Cactus Tour Committee consists of the Tour Director and the host course PGA professional.</p><br/><br/>
+                        <span className="pop-title">Allotted Time: </span><br/>
+                        <span className="pop">When play is in groups of two, groups will be required to play at a 3 hour and 15 minute pace for the 18-hole round. When play is in groups of three, groups will be required to play at a 3 hour and 45 minute pace for the 18-hole round. When play is in groups of four, groups will be required to play at a 4 hour and 15 minute pace for 18 holes. </span><br/><br/>
+                        <span className="pop-title">Definition of "Out of Position": </span><br/>
+                        <span className="pop">The first group to start will be considered out of position if, at any time during the round, the group is behind the prescribed schedule. Any following group will be considered out of position if it (a) is taking more than the allotted time to play and (b) reaches the tee of a par-3 hole and the preceding group has cleared the next tee; reaches the tee of a par-4 hole and the putting green is clear; or reaches the tee of a par-5 hole when the preceding group is on the putting green. Both (a) and (b) must apply for a group to be out of position.</span><br/><br/>
+                        <span className="pop-title">Group Out of Position: </span><br/>
+                        <span className="pop">If a group is out of position, a Tour Rules Official will monitor them.  A group out of position will NOT be informed when they are being monitored and timed.  However, a player may ask a Rules Official if his group is being monitored and timed.</span><br/><br/>
+                        <span className="pop-title">Timing: </span><br/>
+                        <span className="pop"> If a group is out of position, it may be monitored or timed for failure to comply with this pace of play guideline. When a group is out of position each player in the group is expected to play any stroke within 40 seconds after timing of the player’s stroke begins. Other than on the putting green, timing of a player’s stroke will begin when she has had reasonable opportunity to reach her ball, it is her turn to play and she can play without interference or distraction. Time spent determining yardage will count as part of the time taken for the next stroke. On the putting green, timing will begin after a player has been allowed a reasonable amount of time to lift, clean and replace her ball, repair her ball mark and other ball marks on her line of putt and remove loose impediments from her line of putt. Time spent looking at the line from beyond the hole and/or behind the ball will count as part of the time taken for the next stroke. <br/><br/> A player is permitted 40 seconds to play a stroke. An extra 10 seconds (for a total of 50 seconds) will be allowed for: </span>
+                        <ul className="pop-list">
                             <li>the first player to play a stroke on a par-3 hole</li>
                             <li>the first player to play a second stroke on a par-4 or par-5 hole</li>
                             <li>the first player to play a third stroke on a par-5 hole</li>
                             <li>the first player to play a stroke around the putting green</li>
                             <li>the first player to play a stroke on the putting green</li>
                         </ul >
-                        <p className="pop">The Committee reserves the right at any time to time a group when the Committee deems it necessary. Players should also be aware that the Committee may assess a “bad time” to a player in a group which is out of position if the player makes no effort to help his group get back in position. An example of this would be a player who unduly delays play between shots. <br/>Any group with a player (s) who has a bad time will be notified if the group requires additional monitoring and timing during the round.</p>
-                        <span className="pop-title">Rulings or Other Incidents: </span>
-                        <p className="pop">If a ruling or some other legitimate delay occurs which causes the group in question to lose its position, that group is expected to regain its position within a reasonable time. </p>
-                        <span className="pop-title">Appeals: </span>
-                        <p className="pop"> Any appeal of a pace of play penalty must be referred to the Tour Director immediately upon completion of the player in question's round.  The Tour Director and host course PGA Professional's decision shall be final.</p>
-                    </p>
+                        <p className="pop">The Committee reserves the right at any time to time a group when the Committee deems it necessary. Players should also be aware that the Committee may assess a “bad time” to a player in a group which is out of position if the player makes no effort to help his group get back in position. An example of this would be a player who unduly delays play between shots. <br/>Any group with a player (s) who has a bad time will be notified if the group requires additional monitoring and timing during the round.</p><br/><br/>
+                        <span className="pop-title">Rulings or Other Incidents: </span><br/>
+                        <span className="pop">If a ruling or some other legitimate delay occurs which causes the group in question to lose its position, that group is expected to regain its position within a reasonable time. </span><br/><br/>
+                        <span className="pop-title">Appeals: </span><br/>
+                        <span className="pop"> Any appeal of a pace of play penalty must be referred to the Tour Director immediately upon completion of the player in question's round.  The Tour Director and host course PGA Professional's decision shall be final.</span><br/>
                 </div>
                 <div>
                     <span>TRANSPORTATION: </span>
@@ -147,6 +154,7 @@ const Policies = (props)=>{
                     <p>The tournament policies and procedures of The Cactus Tour are subject to revision at any time without notice.</p>
                 </div>
             </PolicyBox>
+            <Footer/>
         </>
     )
 }

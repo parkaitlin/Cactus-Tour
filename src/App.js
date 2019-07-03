@@ -12,7 +12,6 @@ import Profile from './Components/Profile/Profile';
 import Policies from './Components/Policies/Policies';
 import Schedule from './Components/Schedule/Schedule';
 import Contact from './Components/Contact/Contact';
-import Footer from './Components/Footer/Footer';
 
 
 
@@ -106,7 +105,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path={routes.HOME} render={()=> <Home />} />
           {/* <Route exact path={routes.LOGIN} render={()=> <div>LOGIN PAGE</div>} /> */}
-          <Route exact path={routes.MEMBER} render={()=> <Member newAccount={this.newAccount} login={this.login} existingUser={existingUser} showLogin={this.showLogin} showNewUserForm={this.showNewUserForm}/>} />
+          <Route exact path={routes.MEMBER} render={()=> <Member register={this.register} login={this.login} existingUser={existingUser} showLogin={this.showLogin} showNewUserForm={this.showNewUserForm}/>} />
           <Route exact path={routes.SCHEDULE} render={()=> <Schedule user={currentUser} logged={logged} updateCurrentUser={this.updateCurrentUser} />} />
           <Route exact path={routes.PROFILE} render={()=> <Profile user={currentUser} updateCurrentUser={this.updateCurrentUser} logged={logged} />} />
           <Route exact path={routes.PAST} render={()=> <div>PAST RESULTS PAGE</div>} />
@@ -115,7 +114,6 @@ class App extends React.Component {
           <Route exact path={routes.ABOUT} render={()=> <div>ABOUT PAGE</div>} />         
           <Route exact path={routes.LEADER} render={()=> <div>LeaderBoard</div>} />          
         </Switch>
-        <Footer />
       </div>
     )
   }

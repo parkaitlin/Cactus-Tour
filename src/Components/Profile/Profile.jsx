@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -231,21 +232,20 @@ export default class PlayerProfile extends React.Component {
     render(){
         const {user, logged} = this.props
         const {editProfileModal, firstName, lastName, email, hometown, state, member, upcomingTours}= this.state
-        const joined = new Date(user.joined)
-        const playerStatus = user.status === 'professional' ? '(PRO)' : '(AM)'
-        const memberStatus = user.member && 'Member'
         return(
-            <>
+            !logged
+            ? <Redirect to="/"/>
+            : <>
             <ProfilePage>
                 <div className='top-bgimg'>
                     <div className='profile-header'>
                         <h1>{`${user.firstName} ${user.lastName}`}</h1>
                         <h3>Hometown: {`${user.hometown}, ${user.state}`}</h3>
-                        <h4>{playerStatus} | {memberStatus}</h4>
+                        <h4>{user.status === 'professional' ? '(PRO)' : '(AM)'} | {user.member && 'Member'}</h4>
                         <div className='player-info'>
                             <div className='joined'>
                                 <span>Joined</span>
-                                <p>{joined.getFullYear()}</p>
+                                <p>{new Date(user.joined).getFullYear()}</p>
                             </div>
                             <div className="earnings">
                                 <span>Career<br/>Earnings</span>

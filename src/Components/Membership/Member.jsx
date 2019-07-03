@@ -101,8 +101,8 @@ const LoginBox = styled.div`
     align-items: center;
 
     .login-box {
-        border-left: 2px solid black;
-        border-right: 2px solid black;
+        /* border-left: 2px solid black;
+        border-right: 2px solid black; */
         height: 28em;
         display: flex;
         flex-direction: column;
@@ -153,7 +153,7 @@ export default class Member extends React.Component {
         })
     }
     handleNewForm = ()=>{
-        this.props.newAccount(this.state)
+        this.props.register(this.state)
     }
     handleLogin = (e)=>{
         e.preventDefault();

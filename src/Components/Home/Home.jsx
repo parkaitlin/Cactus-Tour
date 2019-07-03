@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import * as routes from '../constants/routes';
 import styled from 'styled-components';
+import Footer from '../Footer/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import AOS from 'aos';
@@ -200,7 +201,7 @@ const Home = (props)=>{
             <div className='bgimg-3'>
             </div>
             
-            {/* <Footer /> */}
+            <Footer />
         </HomePage>
     )
 }

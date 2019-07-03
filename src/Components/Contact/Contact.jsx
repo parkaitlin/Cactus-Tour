@@ -6,7 +6,7 @@ const ContactUs = styled.div`
   height: 82vh;
   width: 100%;
   justify-content: center;
-  padding-top: 3em;
+  padding-top: 6em;
 `
 const ContactInfo = styled.div`
   font-family: 'Open Sans', sans-serif;

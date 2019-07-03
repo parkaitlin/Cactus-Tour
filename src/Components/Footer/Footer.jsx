@@ -15,12 +15,14 @@ const FooterBar = styled.div`
     padding: 15px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     .kp-link {
         color: #777;
         height: 5vh;
         width: auto;
-        margin: 5px;
+        margin: 1em;
     }
     .btns {
         color: pink
@@ -31,13 +33,12 @@ const Footer = (props)=>{
     return(
 
         <FooterBar>
-            <div className="copyright"></div>
-                <p>Copyright © The Cactus Tour 2019. All Rights Reserved.</p>
+                <p>Creator | Kaitlin Park</p>
             <div className="kp-links">
-                <p>Site by parKaitlin</p>
                 <a href="https://github.com/parkaitlin"><FontAwesomeIcon icon={faGithubSquare} className="kp-link" /></a>          
                 <a href="https://www.linkedin.com/in/parkaitlin/"><FontAwesomeIcon icon={faLinkedin} className="kp-link" /></a>      
             </div>
+                <p>Copyright © The Cactus Tour 2019. All Rights Reserved.</p>
         </FooterBar>
     )
 }
