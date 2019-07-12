@@ -31,7 +31,6 @@ const FooterBar = styled.div`
 
 const Footer = (props)=>{
     return(
-
         <FooterBar>
                 <p>Creator | Kaitlin Park</p>
             <div className="kp-links">
