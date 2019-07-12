@@ -29,7 +29,7 @@ const App = props => {
         {/* <Route exact path={routes.LOGIN} render={()=> <div>LOGIN PAGE</div>} /> */}
         <Route 
           exact path={routes.MEMBER} 
-          render={()=> <Member register={this.register} login={this.login} existingUser={existingUser} showLogin={this.showLogin} showNewUserForm={this.showNewUserForm}/>}
+          render={props => <Member props={{ ...props, setLogged, existingUser, setExistingUser, setCurrentUser}} />}
         />
         <Route 
           exact path={routes.SCHEDULE} 
@@ -63,51 +63,7 @@ const App = props => {
     </div>
   )
 }
-  // register = async (info)=>{
-  //   try {
-  //     const data = await fetch('/auth/new', {
-  //       method: "POST",
-  //       credentials: "include",
-  //       body: JSON.stringify(info),
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       }
-  //     })
-  //     const parsedData = await data.json();
-  //     if(parsedData.created === true){
-  //       this.setState({
-  //         logged: true,
-  //         currentUser: parsedData.user
-  //       })
-  //       this.props.history.push('/');
-  //     }
 
-  //   } catch (error) {
-  //     console.log(error)
-  //   }  
-  // }
-  // login = async (info)=>{
-  //   try {
-  //     const data = await fetch('/auth/login', {
-  //       method: "POST",
-  //       credentials: "include",
-  //       body: JSON.stringify(info),
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       }
-  //     })
-  //     const parsedData = await data.json();
-  //     if(parsedData.verified === true){
-  //       this.setState({
-  //         logged: true,
-  //         currentUser: parsedData.user
-  //       })
-  //       this.props.history.push('/');
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
   // logout = async ()=>{
   //   const data = await fetch('/auth/logout', {
   //     method:"POST",
@@ -128,15 +84,6 @@ const App = props => {
   //     currentUser: info
   //   })
   // }
-  // showLogin = ()=>{
-  //   this.setState({
-  //       existingUser: true
-  //   })
-  // }
-  // showNewUserForm = ()=>{
-  //   this.setState({
-  //       existingUser: false
-  //   })
-  // }
+
 
 export default withRouter(App);

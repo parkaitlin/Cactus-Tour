@@ -1,81 +1,10 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import * as routes from '../constants/routes';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faSun} from '@fortawesome/free-regular-svg-icons';
 import { faFacebookSquare, faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
-
-
-const Bar = styled.div`
-    background-color: rgb(230, 233, 235);
-    height: 18vh;
-    display: flex;
-    padding: 15px;
-
-    .left-col, .right-col{
-        flex: 0.5;
-        display: flex;
-    } 
-    .right-col {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: space-between;
-    }
-    /* .login-link {
-        align-self: flex-end;
-    } */
-    .left-col > .navbar-link > img {
-        height: 13vh;
-        width: auto;
-        align-self: center;
-    }
-    .navbar-links {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        flex: 1;
-    }
-
-    .row {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-    .navbar-link {
-        color: #777;
-        text-decoration: none;
-        margin: 0 .7em;
-        font-family: 'Open Sans', sans-serif;
-
-    }
-    .sun-logo {
-        color: #777;
-        font-size: 2.5em;
-        margin-bottom: 1em;
-        animation: rotate 2.5s;
-        animation-iteration-count: 2;
-    }
-    .sm-logo {
-        color: #777;
-        height: 5vh;
-        width: auto;
-        margin: 5px;
-    }
-    @keyframes rotate {
-        0%, 100% {
-            -webkit-transform: rotate(60deg);
-            transform: rotate(60deg);
-        }
-        50% {
-            -webkit-transform: rotate(-60deg);
-            transform: rotate(-60deg);
-        }
-    }
-`
-
+import { Bar } from '../../styles/Bar';
 
 const Navbar = ({logged, setExistingUser, setLogged})=>
     <Bar>
@@ -98,9 +27,8 @@ const Navbar = ({logged, setExistingUser, setLogged})=>
                 <NavLink 
                     to={routes.MEMBER} 
                     className="navbar-link" 
-                    onClick={() => setExistingUser(false)}
-                >
-                Membership Information
+                    onClick={() => setExistingUser(false)}>
+                    Membership Information
                 </NavLink>
 
                 <NavLink 
@@ -117,7 +45,12 @@ const Navbar = ({logged, setExistingUser, setLogged})=>
                 Money List
                 </a>
 
-                {/* <NavLink to={routes.PAST} className="navbar-link">Past Results</NavLink> */}
+                {/* <NavLink 
+                    to={routes.PAST} 
+                    className="navbar-link"
+                >
+                Past Results
+                </NavLink> */}
                 <NavLink 
                     to={routes.POLICY} 
                     className="navbar-link"
@@ -131,7 +64,12 @@ const Navbar = ({logged, setExistingUser, setLogged})=>
                 >
                 Contact Us
                 </NavLink>
-                {/* <NavLink to={routes.ABOUT} className="navbar-link">About</NavLink> */}
+                {/* <NavLink 
+                    to={routes.ABOUT} 
+                    className="navbar-link"
+                >
+                About
+                </NavLink> */}
             </div>
         </div>
         <div className="right-col">
