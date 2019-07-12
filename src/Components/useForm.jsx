@@ -9,7 +9,7 @@ const useForm = callback => {
   };
   const handleChange = e => {
     e.persist();
-    setValues({...values, [e.target.name]: e.target.value});
+    setValues({ ...values, [e.target.name]: e.target.value});
   };
 
   return {
