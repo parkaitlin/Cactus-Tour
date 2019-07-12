@@ -1,7 +1,7 @@
 import React from 'react';
 import {ModalBox} from '../../styles/Modal';
 
-const Modal = ({show, children})=>{
+const Modal = ({props: {show, children}})=>{
     const showOrHide = show ? 'show-modal' : 'hide-modal'
     return(
         <ModalBox>

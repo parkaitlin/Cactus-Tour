@@ -33,7 +33,7 @@ const App = props => {
         />
         <Route 
           exact path={routes.SCHEDULE} 
-          render={()=> <Schedule user={currentUser} logged={logged} updateCurrentUser={this.updateCurrentUser} />} 
+          render={props => <Schedule props={{ ...props, logged, currentUser, setCurrentUser}} />} 
         />
         <Route 
           exact path={routes.PROFILE} 
