@@ -6,30 +6,29 @@ import { ScheduleTable } from '../../styles/SchedulePage';
 import useForm from '../useForm';
 
 
-const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
+const Schedule = ({ props: { logged, setLogged, currentUser, setCurrentUser } }) => {
     const [showPlayerList, setShowPlayerList] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [tours, setTours] = useState([]);
-    const [selectedTour, setSelectedTour] = useState([]);
+    const [selectedTour, setSelectedTour] = useState({});
     const [eventId, setEventId] = useState(0);
     const [eventNum, setEventNum] = useState(0);
-    const [message, setMessage] = useState('');
 
-    const eventActions = async () => {
+    const eventActions = async (e) => {
         try {
+            const inputs = {
+                eventStartDate: values.eventStartDate,
+                eventEndDate: values.eventEndDate,
+                venue: values.venue,
+                city: values.city,
+                state: values.state,
+                purse: values.purse,
+                startTime: values.startTime,
+                notes: values.notes,
+                status: values.status
+            }
             if(showEditModal){
-                const inputs = {
-                    eventStartDate: values.eventStartDate,
-                    eventEndDate: values.eventEndDate,
-                    venue: values.venue,
-                    city: values.city,
-                    state: values.state,
-                    purse: values.purse,
-                    startTime: values.startTime,
-                    notes: values.notes,
-                    status: values.status
-                }
-                const data = await fetch(`/tour/${this.state.selectedTour._id}`, {
+                await fetch(`/tour/${selectedTour._id}`, {
                     method: "PUT",
                     credentials: "include",
                     body: JSON.stringify(inputs),
@@ -37,68 +36,55 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                         "Content-Type": "application/json"
                     }
                 })
-                const parsedData = data.json()
-                this.updateTours();
-                return parsedData
+                setShowEditModal(false);
             } else {
-                const data = await fetch('/tour/new', {
+                await fetch('/tour/new', {
                     method: "POST",
                     credentials: "include",
-                    body: JSON.stringify(this.state),
+                    body: JSON.stringify(inputs),
                     headers: {
                         "Content-Type": "application/json"
                     }
                 })
-                const parsedData = data.json()
-                this.updateTours()
-                return parsedData
+                window.location.reload();
             }
         } catch (error) {
             throw new Error(error);
         }
     }
+    
+    const playerRegistration = async(index)=>{
+        const data = await fetch(`/tour/registration/${tours[index]._id}`, {
+            credentials: 'include',
+            headers:{
+                "Content-Type": "application/json"
+            }
+        });
+        const parsedData = await data.json();
+        setSelectedTour(tours[index]);
+        sessionStorage.setItem('currentUser', JSON.stringify(parsedData.user));
+    }
 
-    const {values, setValues, handleChange, handleSubmit} = useForm(eventActions)
-    const cancelEvent = async ()=>{
-        setValues( {...values, status: false, notes: "CANCELLED"} )
-        try {
-            const data = await fetch(`/tour/${this.state.selectedTour._id}`, {
-                method: "PUT",
-                credentials: "include",
-                body: JSON.stringify({status: values.status, notes: values.notes}),
+    const {values, setValues, handleChange, handleSubmit } = useForm(eventActions);
+    
+    useEffect(() => {
+        console.log('useEffect')
+        const getTours = async()=>{
+            const data = await fetch('/tour/all', {
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 }
-            })
-            const parsedData = data.json()
-            return parsedData
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    useEffect(() => {
-        const getTours = async()=>{
-            try {
-                const data = await fetch('/tour/all', {
-                    credentials: 'include',
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
-                const parsedData = await data.json();
-                setTours(parsedData.tours);
-                setEventId(parsedData.tours.length + 1);
-                setShowEditModal(false);
-                setShowPlayerList(false);
-                setSelectedTour({});
-                setEventNum(0);
-                setValues({});
-            } catch (error) {
-                console.log(error);
-            }
+            });
+            const parsedData = await data.json();
+            setTours(parsedData.tours);
+            setEventId(parsedData.tours.length + 1);
+            setLogged(sessionStorage.getItem('logged'));
+            setCurrentUser(JSON.parse(sessionStorage.getItem('currentUser')));
         }
         getTours();
-    })
+    }, [values, showEditModal, selectedTour, setCurrentUser, setLogged]);
+
     return(
         <>
         <ScheduleTable>
@@ -107,7 +93,6 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                     ? <></>
                     : currentUser.admin 
                     && <>
-                        <p>{message}</p>
                         <div className='entire-table'>
                         <table className='table'>
                             <thead className="table-head">
@@ -126,7 +111,6 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                             type='number' 
                                             name='eventId' 
                                             value={eventId} 
-                                            onChange={handleChange} 
                                             readOnly
                                         />
                                     </td>
@@ -150,7 +134,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                         <input 
                                             type='text' 
                                             name='venue' 
-                                            value={values.venue} 
+                                            // value={values.venue} 
                                             onChange={handleChange} 
                                         />
                                         <br/>
@@ -159,7 +143,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                             className='city-input' 
                                             type='text' 
                                             name='city' 
-                                            value={values.city} 
+                                            // value={values.city} 
                                             onChange={handleChange} 
                                         />
                                         <label>State:</label>                                        
@@ -167,7 +151,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                             className='state-input' 
                                             list='states' 
                                             name='state' 
-                                            value={values.state} 
+                                            // value={values.state} 
                                             onChange={handleChange} 
                                         />
                                             <AllStates />
@@ -177,7 +161,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                                             type='text' 
                                                             name='purse' 
                                                             placeholder='ex) 9,000' 
-                                                            value={values.purse} 
+                                                            // value={values.purse} 
                                                             onChange={handleChange} 
                                                         />
                                         <br/>
@@ -194,7 +178,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                         <input 
                                             type='text' 
                                             name='notes' 
-                                            value={values.notes} 
+                                            // value={values.notes} 
                                             onChange={handleChange} 
                                         />
                                         <br/>
@@ -228,14 +212,16 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                 currentUser={currentUser} 
                                 setCurrentUser={setCurrentUser}
                                 logged={logged} 
-                                setMessage={setMessage}
+                                setValues={setValues}
+                                playerRegistration={playerRegistration}
+                                // setMessage={setMessage}
                             />
                         </tbody>
                     </table>
                 </div>
         </ScheduleTable>
         <Modal show={showPlayerList}>
-            <button className="exit-btn" onClick={() => setShowPlayerList(false)}>X</button>
+            <button className="exit-btn" onClick={() => {setShowPlayerList(false)}}>X</button>
             <h1>Registered Players</h1>
             <div className='player-table'>
                 <table className='table'>
@@ -274,7 +260,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
             </div>    
         </Modal>
         <Modal show={showEditModal}>
-            <button className="exit-btn" onClick={() => setShowEditModal(false)}>X</button>
+            <button className="exit-btn" onClick={() => {setShowEditModal(false); setValues({});}}>X</button>
             <h1>Edit Tournament</h1>
             <div className='entire-table'>
                     <table className='table'>
@@ -297,7 +283,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                     <input 
                                         type='date' 
                                         name='eventStartDate' 
-                                        value={selectedTour.eventStartDate} 
+                                        value={values.eventStartDate} 
                                         onChange={handleChange} 
                                     />
                                     <br/>
@@ -305,7 +291,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                     <input 
                                         type='date' 
                                         name='eventEndDate' 
-                                        value={selectedTour.eventEndDate} 
+                                        value={values.eventEndDate} 
                                         onChange={handleChange} 
                                     />
                                 </td>
@@ -314,7 +300,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                     <input 
                                         type='text' 
                                         name='venue' 
-                                        value={selectedTour.venue} 
+                                        value={values.venue} 
                                         onChange={handleChange} 
                                     />
                                     <br/>
@@ -323,7 +309,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                         className='city-input' 
                                         type='text' 
                                         name='city' 
-                                        value={selectedTour.city} 
+                                        value={values.city} 
                                         onChange={handleChange} 
                                     />
                                     <label>State:</label>                                        
@@ -331,7 +317,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                         className='state-input' 
                                         list='states' 
                                         name='state' 
-                                        value={selectedTour.state} 
+                                        value={values.state} 
                                         onChange={handleChange} 
                                     />
                                         <AllStates />
@@ -341,7 +327,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                     <input 
                                         type='text' 
                                         name='purse' 
-                                        value={selectedTour.purse} 
+                                        value={values.purse} 
                                         onChange={handleChange} 
                                     />
                                     <br/>
@@ -352,7 +338,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                         <input 
                                             type='time' 
                                             name='startTime' 
-                                            value={selectedTour.startTime} 
+                                            value={values.startTime} 
                                             onChange={handleChange} 
                                         />
                                         <br/>
@@ -360,7 +346,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                                         <input 
                                             type='text' 
                                             name='notes' 
-                                            value={selectedTour.notes} 
+                                            value={values.notes} 
                                             onChange={handleChange} 
                                         />
                                         <br/>
@@ -383,7 +369,7 @@ const Schedule = ({ props: { logged, currentUser, setCurrentUser } }) => {
                 <button onClick={handleSubmit}>Save Changes</button>
                 {
                     values.status 
-                    && <button className='cancel-btn' onClick={() => cancelEvent()}>Cancel Event</button>
+                    && <button className='cancel-btn' onClick={() => setValues( {...values, status: false, notes: "CANCELLED"} )}>Cancel Event</button>
                 }
         </Modal>
         </>

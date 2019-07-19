@@ -1,44 +1,23 @@
 import React from 'react';
 import { handleDate, handleMonth, handleTime } from '../timeAndDate';
 
-const TourSchedule = ({props: {tours, selectedTour, setSelectedTour, setShowEditModal, setShowPlayerList, setEventNum, currentUser, setCurrentUser, logged, setMessage}})=>{
-    const playerList = (index) => {
-        setShowPlayerList(true);
-        setSelectedTour(tours[index]);
-        setEventNum(index + 1);
-    }
-    const editModal = (index) => {
-        setShowEditModal(true);
-        setSelectedTour(tours[index]);
-        setEventNum(index + 1);
-    }
-    const eventRegistration = async(index)=>{
-        setSelectedTour(tours[index]);
-        let registered = false;
+const TourSchedule = ({tours, selectedTour, setSelectedTour, setShowEditModal, setShowPlayerList, setEventNum, currentUser, setCurrentUser, logged, setValues, playerRegistration, setMessage}) => {
+    // const playerRegistration = async(index)=>{
+    //     try {
+    //         const data = await fetch(`/tour/registration/${tours[index]._id}`, {
+    //             credentials: 'include',
+    //             headers:{
+    //                 "Content-Type": "application/json"
+    //             }
+    //         });
+    //         const parsedData = await data.json();
+    //         console.log(parsedData);
+    //         setCurrentUser(parsedData.user);
+    //     } catch (error) {
+    //         throw new Error(error);
+    //     } 
+    // }
 
-        for(let i = 0; i < currentUser.registeredTours.length - 1; i++){
-            if(selectedTour.registeredPlayers.length === 0 || currentUser.registeredTours.length === 0){
-                registered = false
-            } else if(selectedTour.registeredPlayers[i]._id === currentUser._id){
-                registered = true;
-                setMessage('You are already registered for the selected tournament');
-            }
-        }
-        if(!registered){
-            try {
-            const data = await fetch(`/tour/registration/${this.state.selectedTour._id}`, {
-                credentials: 'include',
-                headers:{
-                    "Content-Type": "application/json"
-                }
-            })
-            const parsedData = await data.json();
-            setCurrentUser(parsedData.user)
-            } catch (error) {
-            console.log(error)
-            } 
-        }
-    }
     const tournaments = tours.map((tour, i)=>{
         return(
             <tr className="tour-row" key={tour._id}>
@@ -59,7 +38,13 @@ const TourSchedule = ({props: {tours, selectedTour, setSelectedTour, setShowEdit
                 <td className='add-info'>
                     <div>
                         <div>First Start Time: {handleTime(tour.startTime)}</div>
-                        <button name="showPlayerList" onClick={() => playerList(i)}>View Registered Players</button><br/>
+                        <button onClick={() => {
+                            setShowPlayerList(true);
+                            setSelectedTour(tours[i]);
+                            setEventNum(i + 1);}}>
+                            View Registered Players
+                        </button>
+                        <br/>
                         {/* <Link to={routes.LEADER}>View Leaderboard</Link> */}
                         <div>Note to Players: <span className="notes-red">{tour.notes}</span></div>
                     </div>
@@ -67,12 +52,19 @@ const TourSchedule = ({props: {tours, selectedTour, setSelectedTour, setShowEdit
                     !currentUser
                     ? <></>
                     : currentUser.admin
-                    && <button name='showEditModal' className="tour-edit-btn" onClick={() => editModal(i)}>Edit</button>
+                    && <button name='showEditModal' className="tour-edit-btn" onClick={() => {
+                        setShowEditModal(true);
+                        setSelectedTour(tours[i]);
+                        setEventNum(i + 1);
+                        setValues(tours[i]);}}>
+                        Edit
+                    </button>
                     }
                     {
-                        logged && new Date(tour.eventStartDate) > new Date()
-                        && <button className="tour-register-btn" onClick={() => eventRegistration(i)}>Register</button>
-                    }                    
+                        currentUser === null ? null
+                        : currentUser.registeredTours.includes(tour._id) ? <button className="tour-unregister-btn" onClick={() => playerRegistration(i)}>Unregister</button>
+                        :logged && new Date(tour.eventStartDate) > new Date() && <button className="tour-register-btn" onClick={() => playerRegistration(i)}>Register</button>                    
+                    }
                 </td>
             </tr>
         )

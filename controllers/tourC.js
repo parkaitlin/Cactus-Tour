@@ -49,16 +49,42 @@ module.exports = {
         try {
             const user = await User.findById(req.session.userDbId);
             const tour = await Tour.findById(req.params.id);
-            user.registeredTours.push(tour._id);
-            user.save();
-            tour.registeredPlayers.push({_id: user._id, firstName: user.firstName, lastName: user.lastName, hometown: user.hometown, state: user.state});
-            tour.save();
+            if(user.registeredTours.includes(req.params.id)){
+                console.log('already registered')
+                let x;
+                let y;
+                for(let i = 0; i < user.registeredTours.length; i++){
+                    if(user.registeredTours[i] === req.params.id){
+                        x = i
+                    }
+                }
+                for(let i = 0; i < tour.registeredPlayers.length; i++){
+                    if(tour.registeredPlayers[i]._id === req.session.userDbId){
+                        y = i
+                    }
+                }
+                user.registeredTours.splice(x, 1);
+                user.save();
+                tour.registeredPlayers.splice(y, 1);
+                tour.save();
 
-            res.json({
-                status: 200,
-                user: user,
-                tour: tour
-            })
+                res.json({
+                    status: 200,
+                    user: user,
+                    tour: tour
+                })
+            } else {
+                user.registeredTours.push(tour._id);
+                user.save();
+                tour.registeredPlayers.push({_id: user._id, firstName: user.firstName, lastName: user.lastName, hometown: user.hometown, state: user.state});
+                tour.save();
+    
+                res.json({
+                    status: 200,
+                    user: user,
+                    tour: tour
+                })
+            }
         } catch (error) {
             res.json({
                 error: error

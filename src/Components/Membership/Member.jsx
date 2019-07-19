@@ -3,7 +3,7 @@ import AllStates from './states';
 import useForm from '../useForm';
 import { NewUserForm, LoginBox } from '../../styles/MemberPage';
 
-const Member = ({ props: { history, setLogged, existingUser, setExistingUser, setCurrentUser} }) => {
+const Member = ({ props: { history, logged, setLogged, existingUser, setExistingUser, currentUser, setCurrentUser} }) => {
     const [message, setMessage] = useState("");
 
     const authenticate = async ()=>{
@@ -24,7 +24,9 @@ const Member = ({ props: { history, setLogged, existingUser, setExistingUser, se
                 const parsedData = await data.json();
                 if(parsedData.verified === true){
                     setLogged(true);
-                    setCurrentUser(parsedData.user)
+                    setCurrentUser(parsedData.user);
+                    sessionStorage.setItem("logged", true);
+                    sessionStorage.setItem('currentUser', JSON.stringify(parsedData.user));
                     history.push('/');
                 } else {
                     setMessage(parsedData.message);
@@ -40,6 +42,7 @@ const Member = ({ props: { history, setLogged, existingUser, setExistingUser, se
                     state: values.state,
                     member: values.member,
                     status: values.status,
+                    admin: true
                 };
                 const data = await fetch('/auth/new', {
                     method: "POST",
@@ -53,6 +56,8 @@ const Member = ({ props: { history, setLogged, existingUser, setExistingUser, se
                 if(parsedData.created === true){
                     setLogged(true);
                     setCurrentUser(parsedData.user);
+                    sessionStorage.setItem("logged", true);
+                    sessionStorage.setItem('currentUser', JSON.stringify(parsedData.user));
                     history.push('/');
                 }
             }

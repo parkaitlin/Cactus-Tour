@@ -6,7 +6,7 @@ import {faSun} from '@fortawesome/free-regular-svg-icons';
 import { faFacebookSquare, faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
 import { Bar } from '../../styles/Bar';
 
-const Navbar = ({logged, setExistingUser, setLogged})=>
+const Navbar = ({logged, setExistingUser, setCurrentUser, setLogged, message})=>
     <Bar>
         <div className="left-col">
             <NavLink 
@@ -18,6 +18,7 @@ const Navbar = ({logged, setExistingUser, setLogged})=>
                 </img>
             </NavLink>
         </div>
+
         <div className="navbar-links">
             <FontAwesomeIcon 
                 icon={faSun} 
@@ -30,59 +31,48 @@ const Navbar = ({logged, setExistingUser, setLogged})=>
                     onClick={() => setExistingUser(false)}>
                     Membership Information
                 </NavLink>
-
                 <NavLink 
                     to={routes.SCHEDULE} 
-                    className="navbar-link"
-                >
-                Schedule
+                    className="navbar-link">
+                    Schedule
                 </NavLink>
-
                 <a 
                     href="http://thecactustour.com/money/19MoneyList.pdf" 
-                    className="navbar-link"
-                >
-                Money List
+                    className="navbar-link">
+                    Money List
                 </a>
-
                 {/* <NavLink 
                     to={routes.PAST} 
-                    className="navbar-link"
-                >
-                Past Results
+                    className="navbar-link">
+                    Past Results
                 </NavLink> */}
                 <NavLink 
                     to={routes.POLICY} 
-                    className="navbar-link"
-                >
-                Policies
+                    className="navbar-link">
+                    Policies
                 </NavLink>
-
                 <NavLink 
                     to={routes.CONTACT} 
-                    className="navbar-link"
-                >
-                Contact Us
+                    className="navbar-link">
+                    Contact Us
                 </NavLink>
                 {/* <NavLink 
                     to={routes.ABOUT} 
-                    className="navbar-link"
-                >
-                About
+                    className="navbar-link">
+                    About
                 </NavLink> */}
             </div>
         </div>
+
         <div className="right-col">
             <div className="sm-links">
-                <a 
-                    href="https://www.facebook.com/The-Cactus-Tour-83099767055/">
+                <a href="https://www.facebook.com/The-Cactus-Tour-83099767055/">
                     <FontAwesomeIcon 
                         icon={faFacebookSquare} 
                         className="sm-logo" 
                     />
                 </a>
-                <a 
-                    href="https://twitter.com/thecactustour">
+                <a href="https://twitter.com/thecactustour">
                     <FontAwesomeIcon 
                         icon={faTwitterSquare} 
                         className="sm-logo" 
@@ -94,26 +84,25 @@ const Navbar = ({logged, setExistingUser, setLogged})=>
                 ? <div className="profile-logout">
                     <NavLink 
                         to={routes.PROFILE} 
-                        className="navbar-link"
-                    >
-                    Profile
+                        className="navbar-link">
+                        Profile
                     </NavLink>
-
                     <NavLink 
                         to={routes.HOME} 
                         className="navbar-link" 
-                        onClick={() => setLogged(false)}
-                    >
-                    Logout
+                        onClick={() => {
+                            setLogged(false); 
+                            setCurrentUser(null);
+                            sessionStorage.clear();}}>
+                        Logout
                     </NavLink>
                 </div> 
                 : <NavLink 
-                        to={routes.MEMBER} 
-                        className="navbar-link login-link" 
-                        onClick={() => setExistingUser(true)}
-                    >
+                    to={routes.MEMBER} 
+                    className="navbar-link login-link" 
+                    onClick={() => setExistingUser(true)}>
                     Player Portal
-                    </NavLink>
+                </NavLink>
             }
         </div>
     </Bar>

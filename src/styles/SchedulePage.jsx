@@ -85,7 +85,8 @@ export const ScheduleTable = styled.div`
         font-family: 'Open Sans', sans-serif;  
         color: #33357d;
         font-weight: 600;
-        margin: 25px 0;      
+        margin: 25px 0;  
+        transition: .6s;    
     }
     .add-tour-btn:hover, .tour-edit-btn:hover, .tour-register-btn:hover {
         background-color: #33357d;
@@ -100,6 +101,7 @@ export const ScheduleTable = styled.div`
         font-family: 'Open Sans', sans-serif;  
         color: #33357d;
         font-weight: 600;
+        transition: .6s;    
     }
     .notes-red {
         color: red

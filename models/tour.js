@@ -8,7 +8,7 @@ const TourSchema = mongoose.Schema({
     state: String,
     purse: String, // $
     startTime: String,
-    notes: {type: String, default: 'none'},
+    notes: {type: String, default: ''},
     status: {type: Boolean, default: true}, // active or cancelled
     registeredPlayers: [],
     teeTimes: [], // array of objects {time: , players: [player1, player2, player3]}

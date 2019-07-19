@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './App.css';
 
@@ -18,26 +18,27 @@ const App = props => {
   const [logged, setLogged] = useState(false);
   const [existingUser, setExistingUser] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [message, setMessage] = useState('');
+
   return (
     <div className="App">
-      <Navbar logged={logged} setExistingUser={setExistingUser} setLogged={setLogged} />
+      <Navbar logged={logged} setExistingUser={setExistingUser} setCurrentUser={setCurrentUser} setLogged={setLogged} message={message} />
       <Switch>
         <Route 
           exact path={routes.HOME} 
           render={()=> <Home />} 
         />
-        {/* <Route exact path={routes.LOGIN} render={()=> <div>LOGIN PAGE</div>} /> */}
         <Route 
           exact path={routes.MEMBER} 
-          render={props => <Member props={{ ...props, setLogged, existingUser, setExistingUser, setCurrentUser}} />}
+          render={props => <Member props={{ ...props, logged, setLogged, existingUser, setExistingUser, currentUser, setCurrentUser}} />}
         />
         <Route 
           exact path={routes.SCHEDULE} 
-          render={props => <Schedule props={{ ...props, logged, currentUser, setCurrentUser}} />} 
+          render={props => <Schedule props={{ ...props, logged, setLogged, currentUser, setCurrentUser, setMessage}} />} 
         />
         <Route 
           exact path={routes.PROFILE} 
-          render={()=> <Profile user={currentUser} updateCurrentUser={this.updateCurrentUser} logged={logged} />} 
+          render={props => <Profile props={{ ...props, currentUser, setCurrentUser, logged }} />} 
         />
         <Route 
           exact path={routes.PAST} 
@@ -63,27 +64,5 @@ const App = props => {
     </div>
   )
 }
-
-  // logout = async ()=>{
-  //   const data = await fetch('/auth/logout', {
-  //     method:"POST",
-  //     credentials: "include",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   })
-  //   const parsedData = data.json()
-  //   this.setState({
-  //     logged: false,
-  //     currentUser: null
-  //   })
-  //   return parsedData
-  // }
-  // updateCurrentUser = (info)=>{
-  //   this.setState({
-  //     currentUser: info
-  //   })
-  // }
-
 
 export default withRouter(App);

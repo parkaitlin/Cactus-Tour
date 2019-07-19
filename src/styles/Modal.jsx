@@ -53,12 +53,14 @@ export const ModalBox = styled.div`
         display: flex;
         flex-direction: column;
         align-self: flex-end;
+        transition: .6s;
     }
     .cancel-btn {
         border: 2px solid #cc2a36;
         border-top: none;
         color: #cc2a36;
         margin-top: 0; 
+        transition: .6s;
     }
     .cancel-btn:hover {
         background-color: #cc2a36;
