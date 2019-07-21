@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import Modal from '../Schedule/modal';
+import Modal from '../modal';
 import Footer from '../Footer/Footer';
 import AllStates from '../Membership/states';
 import Upcoming from './upcoming';

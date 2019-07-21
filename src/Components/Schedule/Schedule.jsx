@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AllStates from '../Membership/states';
 import Tournaments from './tournaments';
-import Modal from './modal';
+import Modal from '../modal';
 import { ScheduleTable } from '../../styles/SchedulePage';
 import useForm from '../useForm';
 

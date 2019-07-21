@@ -1,5 +1,5 @@
 import React from 'react';
-import {ModalBox} from '../../styles/Modal';
+import {ModalBox} from '../styles/Modal';
 
 const Modal = ({show, children})=>{
     const showOrHide = show ? 'show-modal' : 'hide-modal'
