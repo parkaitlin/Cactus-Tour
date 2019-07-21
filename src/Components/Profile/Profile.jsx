@@ -6,8 +6,9 @@ import Modal from '../modal';
 import Footer from '../Footer/Footer';
 import AllStates from '../Membership/states';
 import Upcoming from './upcoming';
-import { ProfilePage } from '../../styles/ProfilePage';
-import useForm from '../useForm';
+import { ProfilePage, EditButton } from '../../styles/ProfilePage';
+import { Exit } from '../../styles/Buttons'
+;import useForm from '../useForm';
 
 const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
     const [editProfileModal, setEditProfileModal] = useState(false);
@@ -46,35 +47,19 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
     useEffect(() => {
         console.log('useEffect');
         const getUpcomingTours = async () => {
-            const data = await fetch('/tour/upcoming', {
+            const data = await fetch(`/${currentUser._id}/upcoming`, {
                 credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 }
             })
             const parsedData = await data.json();
-            setUpcomingTours(parsedData.allTours);
+            console.log(parsedData);
+            // setUpcomingTours(parsedData.allTours);
         }
         getUpcomingTours();
-    }, [editProfileModal]);
+    }, [currentUser, editProfileModal]);
 
-    // componentDidMount(){
-    //     this.getRegisteredTours().then((data)=>{
-    //         this.setState({
-    //             upcomingTours: data.allTours
-    //         })
-    //     })
-    // }
-    // showModal = (e)=>{
-    //     this.setState({
-    //         [e.target.name]: true
-    //     })    
-    // }
-    // hideModal = (e)=>{
-    //     this.setState({
-    //         [e.target.name]: false
-    //     })    
-    // }
     return(
         !logged
         ? <Redirect to="/"/>
@@ -98,7 +83,7 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
                 </div>
                 <div>
                     <FontAwesomeIcon icon={faUserCircle} className="profile-pic" />
-                    <button className="edit-btn" onClick={() => setEditProfileModal(true)}>Edit</button>
+                    <EditButton onClick={() => setEditProfileModal(true)}>Edit</EditButton>
                 </div>
             </div>
             <div className='upcoming-tour'>
@@ -121,12 +106,12 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
                     </div>
             </div>
             <div className='upcoming'>
-                <h2>Results</h2>
+                {/* <h2>Results</h2> */}
             </div>
             <Footer />
         </ProfilePage>
         <Modal show={editProfileModal}>
-            <button name="editProfileModal" className="exit-btn" onClick={() => setEditProfileModal(false)}>X</button>
+            <Exit onClick={() => setEditProfileModal(false)}>X</Exit>
             <h1>Edit Profile</h1>
             <form onSubmit={handleSubmit}>
                 <p>Login Information</p>

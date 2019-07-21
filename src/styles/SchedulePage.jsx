@@ -10,7 +10,7 @@ export const ScheduleTable = styled.div`
     margin-bottom: 5em;
     
     .entire-table {
-        background-attachment: fixed;
+        margin-bottom: 1em;
     }
     .table {
         width: 85vw;
@@ -41,12 +41,16 @@ export const ScheduleTable = styled.div`
     .add-info {
         padding: 5px 8px;
         display: flex;
-        justify-content: space-between
+        flex-direction: row;
+        justify-content: space-between;
         > div > button {
             color: blue;
             background-color: transparent;
             border: none;
             border-bottom: 1px solid blue;
+        }
+        > section {
+            align-self: center;
         }
     }
     label {
@@ -77,7 +81,17 @@ export const ScheduleTable = styled.div`
     .purse > input {
         width: 80px;
     }
-    .add-tour-btn {
+    .notes-red {
+        color: red
+    }
+    .title-year {
+        margin: 25px;
+        font-family: 'Maven Pro', sans-serif;
+        font-size: 50px;
+        color: #33357d;
+
+    }
+    /* .add-tour-btn {
         font-size: 20px;
         border-radius: 4px;
         border: 2px solid #33357d;
@@ -102,15 +116,5 @@ export const ScheduleTable = styled.div`
         color: #33357d;
         font-weight: 600;
         transition: .6s;    
-    }
-    .notes-red {
-        color: red
-    }
-    .title-year {
-        margin: 25px;
-        font-family: 'Maven Pro', sans-serif;
-        font-size: 50px;
-        color: #33357d;
-
-    }
+    } */
 `

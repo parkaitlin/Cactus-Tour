@@ -1,5 +1,21 @@
 import styled from 'styled-components';
 
+export const EditButton = styled.button`
+    font-size: 28px;
+    border-radius: 4px;
+    border: 2px solid white;
+    width: 7vw;
+    height: 6vh;
+    font-family: 'Open Sans', sans-serif;  
+    color: #ffffff;
+    font-weight: 600;
+    background-color: transparent;
+    transition: .6s;
+    :hover {
+        background-color: #ffffff;
+        color: #777;
+    }
+`
 export const ProfilePage = styled.div`
     min-height: 82vh;
     position: absolute;
@@ -60,23 +76,7 @@ export const ProfilePage = styled.div`
         color: white;
         font-size: 200px;
         margin: 60px;
-    }
-    .edit-btn {
-        font-size: 28px;
-        border-radius: 4px;
-        border: 2px solid white;
-        width: 7vw;
-        height: 6vh;
-        font-family: 'Open Sans', sans-serif;  
-        color: #ffffff;
-        font-weight: 600;
-        background-color: transparent;
-    }
-    .edit-btn:hover {
-        background-color: #ffffff;
-        color: #777;
-    }
-        
+    }   
     .entire-table {
         background-attachment: fixed;
     }

@@ -19,6 +19,7 @@ export const ModalBox = styled.div`
         background-color: white;
         display: flex;
         flex-direction: column;
+        padding: 1em 2em;
     }
     @keyframes slideInUp {
         from {
@@ -31,40 +32,6 @@ export const ModalBox = styled.div`
             -webkit-transform: translate3d(0, 0, 0);
             transform: translate3d(0, 0, 0);
         }
-    }
-    button {
-        font-size: 20px;
-        /* border-radius: 4px; */
-        border: 2px solid #33357d;
-        padding: 10px 6px;
-        font-family: 'Open Sans', sans-serif;  
-        color: #33357d;
-        font-weight: 600;
-        margin-top: 15px; 
-    }
-    button:hover {
-        background-color: #33357d;
-        color: #ffffff;
-    }
-    .exit-btn {
-        font-size: 22px;
-        padding: 3px 10px;
-        margin: 6px;
-        display: flex;
-        flex-direction: column;
-        align-self: flex-end;
-        transition: .6s;
-    }
-    .cancel-btn {
-        border: 2px solid #cc2a36;
-        border-top: none;
-        color: #cc2a36;
-        margin-top: 0; 
-        transition: .6s;
-    }
-    .cancel-btn:hover {
-        background-color: #cc2a36;
-        color: #ffffff;
     }
     .entire-table {
         border: 2px solid #777;
@@ -133,5 +100,12 @@ export const ModalBox = styled.div`
         font-size: 50px;
         color: #33357d;
         text-align: center;
+    }
+    button {
+        font-size: 20px;
+        padding: .8em 0;
+        font-family: 'Open Sans', sans-serif;  
+        font-weight: 600;
+        transition: .6s;
     }
 `

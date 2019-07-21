@@ -42,5 +42,21 @@ module.exports = {
                 error: error
             })
         }
+    },
+    upcoming: async(req, res)=>{
+        console.log('upcoming');
+        try {
+            const upcomingTours = await User.findById(req.params.id)
+            .populate('registeredTours')
+            .exec();
+            console.log(upcomingTours);
+            res.json({
+                upcomingTours
+            })
+        } catch (error) {
+            res.json({
+                error: error
+            })
+        }
     }
 }

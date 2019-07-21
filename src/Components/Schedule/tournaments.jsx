@@ -1,5 +1,6 @@
 import React from 'react';
 import { handleDate, handleMonth, handleTime } from '../timeAndDate';
+import { SmallButton } from '../../styles/Buttons';
 
 const TourSchedule = ({tours, selectedTour, setSelectedTour, setShowEditModal, setShowPlayerList, setEventNum, currentUser, setCurrentUser, logged, setValues, playerRegistration, setMessage}) => {
     // const playerRegistration = async(index)=>{
@@ -48,23 +49,25 @@ const TourSchedule = ({tours, selectedTour, setSelectedTour, setShowEditModal, s
                         {/* <Link to={routes.LEADER}>View Leaderboard</Link> */}
                         <div>Note to Players: <span className="notes-red">{tour.notes}</span></div>
                     </div>
+                    <section>
                     {
                     !currentUser
                     ? <></>
                     : currentUser.admin
-                    && <button name='showEditModal' className="tour-edit-btn" onClick={() => {
+                    && <SmallButton onClick={() => {
                         setShowEditModal(true);
                         setSelectedTour(tours[i]);
                         setEventNum(i + 1);
                         setValues(tours[i]);}}>
                         Edit
-                    </button>
+                    </SmallButton>
                     }
                     {
                         currentUser === null ? null
-                        : currentUser.registeredTours.includes(tour._id) ? <button className="tour-unregister-btn" onClick={() => playerRegistration(i)}>Unregister</button>
-                        :logged && new Date(tour.eventStartDate) > new Date() && <button className="tour-register-btn" onClick={() => playerRegistration(i)}>Register</button>                    
+                        : currentUser.registeredTours.includes(tour._id) ? <SmallButton onClick={() => playerRegistration(i)}>Unregister</SmallButton>
+                        :logged && new Date(tour.eventStartDate) > new Date() && <SmallButton onClick={() => playerRegistration(i)}>Register</SmallButton>                    
                     }
+                    </section>
                 </td>
             </tr>
         )

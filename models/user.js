@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Tour = require('./tour');
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
@@ -11,7 +12,10 @@ const UserSchema = new mongoose.Schema({
     member: Boolean,
     paid: {type: Boolean, default: false},
     status: {type: String, required: true},
-    registeredTours: [],
+    registeredTours: [{ 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Tour'
+    }],
     earnings: {type: String, default: '0'},
     admin: {type: Boolean, default: false},
     joined: {type: Date, default: new Date()}
@@ -35,12 +39,5 @@ UserSchema.pre('save', function(next){
 module.exports = mongoose.model('User', UserSchema);
 
 
-// UserSchema.methods.cleanDate = (date)=>{
-//     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-//     const month = new Date(date).getMonth()
-//     const day = new Date(date).getDate()
-//     const year = new Date(date).getFullYear()
-//     return (`${months[month]} ${day}, ${year}`)
-// }
 
 
