@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -11,19 +11,9 @@ import useForm from '../useForm';
 
 const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
     const [editProfileModal, setEditProfileModal] = useState(false);
-    state = {
-        upcomingTours: [],
-        editProfileModal: false,
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        hometown: '',
-        state: '',
-        member: false,
-        status: '',
-    }
-    editProfile = async()=>{
+    const [upcomingTours, setUpcomingTours] = useState([]);
+
+    const editProfile = async()=>{
         try {
             const inputs = {
                 firstName: values.firstName,
@@ -32,7 +22,8 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
                 password: values.password,
                 hometown: values.hometown,
                 state: values.state,
-                status: values.status
+                status: values.status,
+                member: values.member
             }
             const data = await fetch(`/users/${currentUser._id}`, {
                 method: "PUT",
@@ -50,8 +41,11 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
         }
     }
 
-    getRegisteredTours = async()=>{
-        try {
+    const { values, setValues, handleChange, handleSubmit } = useForm(editProfile);
+    
+    useEffect(() => {
+        console.log('useEffect');
+        const getUpcomingTours = async () => {
             const data = await fetch('/tour/upcoming', {
                 credentials: 'include',
                 headers: {
@@ -59,18 +53,18 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
                 }
             })
             const parsedData = await data.json();
-            return parsedData
-        } catch (error) {
-            console.log(error)
+            setUpcomingTours(parsedData.allTours);
         }
-    }
-    componentDidMount(){
-        this.getRegisteredTours().then((data)=>{
-            this.setState({
-                upcomingTours: data.allTours
-            })
-        })
-    }
+        getUpcomingTours();
+    }, []);
+
+    // componentDidMount(){
+    //     this.getRegisteredTours().then((data)=>{
+    //         this.setState({
+    //             upcomingTours: data.allTours
+    //         })
+    //     })
+    // }
     // showModal = (e)=>{
     //     this.setState({
     //         [e.target.name]: true
@@ -88,23 +82,23 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
         <ProfilePage>
             <div className='top-bgimg'>
                 <div className='profile-header'>
-                    <h1>{`${user.firstName} ${user.lastName}`}</h1>
-                    <h3>Hometown: {`${user.hometown}, ${user.state}`}</h3>
-                    <h4>{user.status === 'professional' ? '(PRO)' : '(AM)'} | {user.member && 'Member'}</h4>
+                    <h1>{`${currentUser.firstName} ${currentUser.lastName}`}</h1>
+                    <h3>Hometown: {`${currentUser.hometown}, ${currentUser.state}`}</h3>
+                    <h4>{currentUser.status === 'professional' ? '(PRO)' : '(AM)'} | {currentUser.member && 'Member'}</h4>
                     <div className='player-info'>
                         <div className='joined'>
                             <span>Joined</span>
-                            <p>{new Date(user.joined).getFullYear()}</p>
+                            <p>{new Date(currentUser.joined).getFullYear()}</p>
                         </div>
                         <div className="earnings">
                             <span>Career<br/>Earnings</span>
-                            <p>${user.earnings}</p>
+                            <p>${currentUser.earnings}</p>
                         </div>
                     </div>
                 </div>
                 <div>
                     <FontAwesomeIcon icon={faUserCircle} className="profile-pic" />
-                    <button className="edit-btn" name="editProfileModal" onClick={this.showModal}>Edit</button>
+                    <button className="edit-btn" onClick={() => setEditProfileModal(true)}>Edit</button>
                 </div>
             </div>
             <div className='upcoming-tour'>

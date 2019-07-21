@@ -68,8 +68,8 @@ const Schedule = ({ props: { logged, setLogged, currentUser, setCurrentUser } })
     const {values, setValues, handleChange, handleSubmit } = useForm(eventActions);
     
     useEffect(() => {
-        console.log('useEffect')
-        const getTours = async()=>{
+        console.log('useEffect');
+        const getTours = async () => {
             const data = await fetch('/tour/all', {
                 credentials: 'include',
                 headers: {
