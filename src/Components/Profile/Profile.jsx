@@ -56,7 +56,7 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
             setUpcomingTours(parsedData.allTours);
         }
         getUpcomingTours();
-    }, []);
+    }, [editProfileModal]);
 
     // componentDidMount(){
     //     this.getRegisteredTours().then((data)=>{
@@ -115,7 +115,7 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
                                 </tr>
                             </thead>
                             <tbody className="table-body">
-                                <Upcoming upcomingTours={upcomingTours} user={user} logged={logged} />
+                                <Upcoming upcomingTours={upcomingTours} user={currentUser} logged={logged} />
                             </tbody>
                         </table>
                     </div>
@@ -126,41 +126,41 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
             <Footer />
         </ProfilePage>
         <Modal show={editProfileModal}>
-            <button name="editProfileModal" className="exit-btn" onClick={this.hideModal}>X</button>
+            <button name="editProfileModal" className="exit-btn" onClick={() => setEditProfileModal(false)}>X</button>
             <h1>Edit Profile</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <p>Login Information</p>
-                <input type='text' name='email' placeholder={user.email} value={email} onChange={this.handleChange} />
-                <input type='password' name='password' placeholder='new password' onChange={this.handleChange} />
+                <input type='text' name='email' placeholder={currentUser.email} value={values.email} onChange={handleChange} />
+                <input type='password' name='password' placeholder='new password' onChange={handleChange} />
                 <p>Player Information</p>
-                <input type='text' name='firstName' placeholder={user.firstName} value={firstName} onChange={this.handleChange} />
-                <input type='text' name='lastName' placeholder={user.lastName} value={lastName} onChange={this.handleChange} />
+                <input type='text' name='firstName' placeholder={currentUser.firstName} value={values.firstName} onChange={handleChange} />
+                <input type='text' name='lastName' placeholder={currentUser.lastName} value={values.lastName} onChange={handleChange} />
                 <div className="hometown-state">
-                    <input type='text' name='hometown' placeholder={user.hometown} value={hometown} onChange={this.handleChange} />
-                    <input className="state-input" list='states' name='state' placeholder={user.state} value={state} onChange={this.handleChange} />
+                    <input type='text' name='hometown' placeholder={currentUser.hometown} value={values.hometown} onChange={handleChange} />
+                    <input className="state-input" list='states' name='state' placeholder={currentUser.state} value={values.state} onChange={handleChange} />
                         <AllStates />
                 </div>
                     <label>Status: </label>
                 <div className="pro-am">
-                    Professional <input type="radio" name='status' value="professional" onChange={this.handleChange}/>
-                    Amateur <input type="radio" name='status' value="amateur" onChange={this.handleChange}/>
+                    Professional <input type="radio" name='status' value="professional" onChange={handleChange}/>
+                    Amateur <input type="radio" name='status' value="amateur" onChange={handleChange}/>
                 </div>
                 <p>Membership</p>                    
-                <select name='member' onChange={this.handleChange}>
+                <select name='member' onChange={handleChange}>
                     <option value='false'>No Membership</option>
                     <option value='true'>Annual Membership ($412.00)</option>
                 </select>
+                {
+                    currentUser.member === "true"
+                    && <div className="payment-options">
+                        <label>Pay By </label>
+                        <button>via PayPal</button> 
+                        <label>  or  </label>
+                        <button>Check</button>
+                    </div>
+                }
+                <button type="submit" className="edit-btn">Save Changes</button>
             </form>
-            {
-                member === "true"
-                && <div className="payment-options">
-                    <label>Pay By </label>
-                    <button>via PayPal</button> 
-                    <label>  or  </label>
-                    <button>Check</button>
-                </div>
-            }
-            <button className="edit-btn" onClick={this.editProfile}>Save Changes</button>
         </Modal>
         </>
     )
