@@ -2,7 +2,7 @@ const User = require('../models/user');
 
 module.exports = {
     newAccount: async (req, res)=>{
-        if(req.body.password == req.body.confirmPassword){
+        if(req.body.password === req.body.confirmPassword){
             try{
                 const newUser = await User.create(req.body);
                 req.session.userDbId = newUser._id;

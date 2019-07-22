@@ -62,6 +62,7 @@ const Schedule = ({ props: { logged, setLogged, currentUser, setCurrentUser } })
             }
         });
         const parsedData = await data.json();
+        console.log(parsedData);
         setSelectedTour(tours[index]);
         sessionStorage.setItem('currentUser', JSON.stringify(parsedData.user));
     }

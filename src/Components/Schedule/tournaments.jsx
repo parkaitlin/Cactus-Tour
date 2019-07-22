@@ -64,8 +64,8 @@ const TourSchedule = ({tours, selectedTour, setSelectedTour, setShowEditModal, s
                     }
                     {
                         currentUser === null ? null
-                        : currentUser.registeredTours.includes(tour._id) ? <SmallButton onClick={() => playerRegistration(i)}>Unregister</SmallButton>
-                        :logged && new Date(tour.eventStartDate) > new Date() && <SmallButton onClick={() => playerRegistration(i)}>Register</SmallButton>                    
+                        : currentUser.registeredTours.includes(tour._id) ? <SmallButton onClick={() => {playerRegistration(i); console.log(currentUser.registeredTours.includes(tour._id));}}>Unregister</SmallButton>
+                        : logged && new Date(tour.eventStartDate) > new Date() && <SmallButton onClick={() => playerRegistration(i)}>Register</SmallButton>                    
                     }
                     </section>
                 </td>

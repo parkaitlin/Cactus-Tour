@@ -50,7 +50,7 @@ module.exports = {
             const user = await User.findById(req.session.userDbId);
             const tour = await Tour.findById(req.params.id);
             if(user.registeredTours.includes(req.params.id)){
-                console.log('already registered')
+                console.log('unregister');
                 let x;
                 let y;
                 for(let i = 0; i < user.registeredTours.length; i++){
@@ -67,18 +67,18 @@ module.exports = {
                 user.save();
                 tour.registeredPlayers.splice(y, 1);
                 tour.save();
-
                 res.json({
                     status: 200,
                     user: user,
                     tour: tour
                 })
             } else {
+                console.log('register');
                 user.registeredTours.push(tour._id);
                 user.save();
                 tour.registeredPlayers.push({_id: user._id, firstName: user.firstName, lastName: user.lastName, hometown: user.hometown, state: user.state});
                 tour.save();
-    
+
                 res.json({
                     status: 200,
                     user: user,
@@ -91,22 +91,22 @@ module.exports = {
             })
         }
     },
-    upcomingTours: async(req, res)=>{
-        const allTours = []
-        try {
-            const currentUser = await User.findById(req.session.userDbId)
-            for(let i = 0; i < currentUser.registeredTours.length - 1; i++){
-                const tour = await Tour.findById(currentUser.registeredTours[i])
-                allTours.push(tour)
-            }
-            res.json({
-                status: 200,
-                allTours: allTours
-            })
-        } catch (error) {
-            res.json({
-                error: error
-            })
-        }
-    }    
+    // upcomingTours: async(req, res)=>{
+    //     const allTours = []
+    //     try {
+    //         const currentUser = await User.findById(req.session.userDbId)
+    //         for(let i = 0; i < currentUser.registeredTours.length - 1; i++){
+    //             const tour = await Tour.findById(currentUser.registeredTours[i])
+    //             allTours.push(tour)
+    //         }
+    //         res.json({
+    //             status: 200,
+    //             allTours: allTours
+    //         })
+    //     } catch (error) {
+    //         res.json({
+    //             error: error
+    //         })
+    //     }
+    // }    
 }

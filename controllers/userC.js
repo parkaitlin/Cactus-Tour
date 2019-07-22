@@ -46,12 +46,12 @@ module.exports = {
     upcoming: async(req, res)=>{
         console.log('upcoming');
         try {
-            const upcomingTours = await User.findById(req.params.id)
+            const user = await User.findById(req.session.userDbId)
             .populate('registeredTours')
-            .exec();
-            console.log(upcomingTours);
+            .exec()
+            console.log(user);
             res.json({
-                upcomingTours
+                allTours: user.registeredTours,
             })
         } catch (error) {
             res.json({

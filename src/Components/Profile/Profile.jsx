@@ -47,14 +47,18 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
     useEffect(() => {
         console.log('useEffect');
         const getUpcomingTours = async () => {
-            const data = await fetch(`/${currentUser._id}/upcoming`, {
-                credentials: 'include',
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            const parsedData = await data.json();
-            console.log(parsedData);
+            try {
+                const data = await fetch('users/upcoming', {
+                    credentials: 'include',
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                const parsedData = await data.json();
+                console.log(parsedData);
+            } catch (error) {
+                throw new Error(error);
+            }
             // setUpcomingTours(parsedData.allTours);
         }
         getUpcomingTours();
