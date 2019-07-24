@@ -22,6 +22,7 @@ export const SaveButton = styled.button`
   border-top: 2px solid #33357d;
   border-bottom: 2px solid #33357d;
   margin-top: 3em; 
+  padding: .8em 0;
 
   :hover {
     background-color: #33357d;
@@ -33,6 +34,7 @@ export const CancelButton = styled.button`
   color: #cc2a36;
   border: none;
   border-bottom: 2px solid #cc2a36;
+  padding: .8em 0;
   /* margin-top: 0;  */
   :hover {
     background-color: #cc2a36;
@@ -43,10 +45,13 @@ export const CancelButton = styled.button`
 export const Exit = styled.button`
   font-size: 22px;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-self: flex-end;
+  align-items: center;
   font-family: 'Open Sans', sans-serif;  
   color: #33357d;
   background-color: transparent;
   border: none;
+  width: auto;
+  padding: .5em;
 `

@@ -16,12 +16,14 @@ module.exports = {
         }
     },
     update: async(req, res)=>{
-        try {
+        const user = await User.findById(req.params.id);        
+        if(req.body.password && req.body.password === req.body.confirmPassword){
+            user.password = user.hashPassword(req.body.password);
+            user.save();
+        }
+        try { 
+            delete req.body.password;
             const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {new: true});
-            if(req.body.password){
-                updatedUser.password = updatedUser.hashPassword(req.body.password);
-                updatedUser.save();
-            };
             res.json({
                 status: 200,
                 user: updatedUser
@@ -34,7 +36,7 @@ module.exports = {
     },
     delete: async(req, res)=>{
         try {
-            const deletedUser = await User.findByIdAndUpdate(req.params.id);
+            await User.findByIdAndDelete(req.params.id);
             req.session.destroy();
 
         } catch (error) {
@@ -44,7 +46,6 @@ module.exports = {
         }
     },
     upcoming: async(req, res)=>{
-        console.log('upcoming');
         try {
             const user = await User.findById(req.session.userDbId)
             .populate('registeredTours')

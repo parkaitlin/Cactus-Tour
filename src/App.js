@@ -38,7 +38,7 @@ const App = props => {
         />
         <Route 
           exact path={routes.PROFILE} 
-          render={props => <Profile props={{ ...props, currentUser, setCurrentUser, logged }} />} 
+          render={props => <Profile props={{ ...props, currentUser, setCurrentUser, setLogged, logged }} />} 
         />
         <Route 
           exact path={routes.PAST} 

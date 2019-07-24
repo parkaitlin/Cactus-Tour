@@ -18,11 +18,14 @@ export const EditButton = styled.button`
 `
 export const ProfilePage = styled.div`
     min-height: 82vh;
+    width: 100%;
     position: absolute;
     z-index: -1;
-    
+    > div {
+        padding: 1em 3em;
+    }
     h1 {
-        font-size: 50px;
+        font-size: 3em;
     }
     .top-bgimg {
         background-image: url('imgs/profile.jpg');
@@ -32,10 +35,10 @@ export const ProfilePage = styled.div`
         background-position: bottom;
         background-repeat: no-repeat;
         background-size: cover;
-        height: 50vh;
+        height: 25em;
         display: flex;
         justify-content: space-between;
-        padding: 3vh 3vw 3vh 5vw;
+
     }
     .top-bgimg > div {
         align-self: flex-end;
@@ -47,7 +50,7 @@ export const ProfilePage = styled.div`
     .player-info {
         border: 3px solid white;
         display: flex;
-        height: 15vh;
+        height: 7em;
         width: 30vw;
         padding: 15px;
         justify-content: center;
@@ -98,6 +101,9 @@ export const ProfilePage = styled.div`
     .tour-row {
         background-color: #ffffff;
     }
+    td {
+        padding: 1.5em;
+    }
     td > div {
         color: #1e204b;
         font-family: 'Open Sans', sans-serif;
@@ -106,7 +112,6 @@ export const ProfilePage = styled.div`
         text-align: center;
     }
     .add-info {
-        padding: 5px 8px;
         display: flex;
         justify-content: space-between
         > div > button {
@@ -116,39 +121,34 @@ export const ProfilePage = styled.div`
             border-bottom: 1px solid blue;
         }
     }
-    label {
-        font-size: 13px
-    }
-    input {
-        font-size: 13px;
-        border-radius: 5px;
-        margin: 6px 3px;
-        text-align: center;
-    }
-    .event > input {
-        width: 40px;
-        text-align: inherit;
-    }
-    .tour-info-input {
-        padding: 10px;
-    }
-    .tour-info {
-        padding: 10px;
-    }
-    .city-input {
-        width: 120px;
-    }
-    .state-input {
-        width: 45px;
-    }
-    .purse > input {
-        width: 80px;
-    }
     .upcoming {
         margin: 25px;
         font-family: 'Maven Pro', sans-serif;
         font-size: 50px;
         color: #33357d;
     }
+`
 
+export const EditForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    padding:  0 5em;
+    width: 35em;
+    > p {
+        text-align: center;
+        font-size: 1.3em;
+        margin: .5em 0;
+    }
+    > label {
+        font-size: 1em;
+        margin: .3em 0;
+    }    
+    > input {
+        font-size: 1em;
+        text-align: center;
+        padding: .3em;
+        border: none;
+        border-bottom: 1px solid #777;
+    }
 `

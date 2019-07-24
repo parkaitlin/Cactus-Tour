@@ -91,30 +91,4 @@ export const ScheduleTable = styled.div`
         color: #33357d;
 
     }
-    /* .add-tour-btn {
-        font-size: 20px;
-        border-radius: 4px;
-        border: 2px solid #33357d;
-        width: 200px;
-        font-family: 'Open Sans', sans-serif;  
-        color: #33357d;
-        font-weight: 600;
-        margin: 25px 0;  
-        transition: .6s;    
-    }
-    .add-tour-btn:hover, .tour-edit-btn:hover, .tour-register-btn:hover {
-        background-color: #33357d;
-        color: #ffffff;
-    }
-    .tour-edit-btn, .tour-register-btn {
-        align-self: flex-end;
-        font-size: 15px;
-        border-radius: 4px;
-        border: 2px solid #33357d;
-        padding: 3px 6px;
-        font-family: 'Open Sans', sans-serif;  
-        color: #33357d;
-        font-weight: 600;
-        transition: .6s;    
-    } */
 `

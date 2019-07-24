@@ -5,7 +5,7 @@ export const ModalBox = styled.div`
         display: none;
     }
     .show-modal {
-        height: 100vh;
+        height: calc(100vh);
         width: 100vw;
         position: relative;
         background-color: rgba(0, 0, 0, 0.7);
@@ -20,6 +20,7 @@ export const ModalBox = styled.div`
         display: flex;
         flex-direction: column;
         padding: 1em 2em;
+        max-height: 80%;
     }
     @keyframes slideInUp {
         from {
@@ -57,6 +58,9 @@ export const ModalBox = styled.div`
     .tour-row {
         background-color: #ffffff;
     }
+    td {
+        padding: 1em;
+    }
     td > div {
         color: #1e204b;
         font-family: 'Open Sans', sans-serif;
@@ -70,26 +74,25 @@ export const ModalBox = styled.div`
         justify-content: space-between
     }
     label {
-        font-size: 13px
+        font-size: 13px;
     }
     input {
-        font-size: 13px;
-        border-radius: 5px;
-        margin: 6px 3px;
+        font-size: 1em;
         text-align: center;
+        padding: .3em;
+        border: none;
+        border-bottom: 1px solid #777;
     }
     .event > input {
         width: 40px;
         text-align: inherit;
     }
-    .tour-info-input {
-        padding: 10px;
-    }
+
     .city-input {
         width: 120px;
     }
     .state-input {
-        width: 45px;
+        width: 4em;
     }
     .purse > input {
         width: 80px;
@@ -103,7 +106,6 @@ export const ModalBox = styled.div`
     }
     button {
         font-size: 20px;
-        padding: .8em 0;
         font-family: 'Open Sans', sans-serif;  
         font-weight: 600;
         transition: .6s;

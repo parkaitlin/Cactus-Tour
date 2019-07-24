@@ -1,8 +1,8 @@
 import React from 'react';
 import { handleDate, handleMonth, handleTime } from '../timeAndDate';
 
-const UpcomingTours = (props)=>{
-    const tournaments = props.upcomingTours.map((tour, i)=>{
+const UpcomingTours = ({upcomingTours})=>{
+    const tournaments = upcomingTours.map((tour, i)=>{
         return(
             <tr className="tour-row" key={tour._id}>
                 <td className='event'>
@@ -22,8 +22,7 @@ const UpcomingTours = (props)=>{
                 <td className='add-info'>
                     <div>
                         <div>First Start Time: {handleTime(tour.startTime)}</div>
-                        <button name="showPlayerList" onClick={(e)=>props.showModal(e, i)}>View Registered Players</button><br/>
-                        {/* <Link to={routes.LEADER}>View Leaderboard</Link> */}
+                        {/* <Link to={routes.LEADER}>View Leaderboard</Link> */} 
                         <div>Note to Players: <span className="notes-red">{tour.notes}</span></div>
                     </div>                 
                 </td>

@@ -6,11 +6,12 @@ import Modal from '../modal';
 import Footer from '../Footer/Footer';
 import AllStates from '../Membership/states';
 import Upcoming from './upcoming';
-import { ProfilePage, EditButton } from '../../styles/ProfilePage';
+import { ProfilePage, EditButton, EditForm } from '../../styles/ProfilePage';
+import { SaveButton } from '../../styles/Buttons';
 import { Exit } from '../../styles/Buttons'
 ;import useForm from '../useForm';
 
-const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
+const PlayerProfile = ({props: { currentUser, setCurrentUser, setLogged, logged }}) => {
     const [editProfileModal, setEditProfileModal] = useState(false);
     const [upcomingTours, setUpcomingTours] = useState([]);
 
@@ -21,6 +22,7 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
                 lastName: values.lastName,
                 email: values.email,
                 password: values.password,
+                confirmPassword: values.confirmPassword,
                 hometown: values.hometown,
                 state: values.state,
                 status: values.status,
@@ -35,8 +37,7 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
                 }
             })
             const parsedData = await data.json();
-            setCurrentUser(parsedData.user);
-            setEditProfileModal(false);
+            sessionStorage.setItem('currentUser', JSON.stringify(parsedData.user));
         } catch (error) {
             throw new Error(error);
         }
@@ -45,24 +46,25 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
     const { values, setValues, handleChange, handleSubmit } = useForm(editProfile);
     
     useEffect(() => {
-        console.log('useEffect');
         const getUpcomingTours = async () => {
-            try {
-                const data = await fetch('users/upcoming', {
-                    credentials: 'include',
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                })
-                const parsedData = await data.json();
-                console.log(parsedData);
-            } catch (error) {
-                throw new Error(error);
-            }
-            // setUpcomingTours(parsedData.allTours);
+            const data = await fetch('users/upcoming', {
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            const parsedData = await data.json();
+            setUpcomingTours(parsedData.allTours);
+            setLogged(sessionStorage.getItem('logged'));
+            setCurrentUser(JSON.parse(sessionStorage.getItem('currentUser')));
+        }
+        const cleanup = () => {
+            document.querySelector("form").reset();
         }
         getUpcomingTours();
-    }, [currentUser, editProfileModal]);
+        return cleanup();
+
+    }, [editProfileModal, setCurrentUser, setLogged, setValues]);
 
     return(
         !logged
@@ -104,7 +106,9 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
                                 </tr>
                             </thead>
                             <tbody className="table-body">
-                                <Upcoming upcomingTours={upcomingTours} user={currentUser} logged={logged} />
+                                <Upcoming 
+                                    upcomingTours={upcomingTours} 
+                                />
                             </tbody>
                         </table>
                     </div>
@@ -112,27 +116,79 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
             <div className='upcoming'>
                 {/* <h2>Results</h2> */}
             </div>
-            <Footer />
         </ProfilePage>
         <Modal show={editProfileModal}>
             <Exit onClick={() => setEditProfileModal(false)}>X</Exit>
             <h1>Edit Profile</h1>
-            <form onSubmit={handleSubmit}>
+            <EditForm onSubmit={handleSubmit}>
                 <p>Login Information</p>
-                <input type='text' name='email' placeholder={currentUser.email} value={values.email} onChange={handleChange} />
-                <input type='password' name='password' placeholder='new password' onChange={handleChange} />
+                <label>Email</label>
+                <input 
+                    type='text' 
+                    name='email' 
+                    placeholder={currentUser.email} 
+                    onChange={handleChange} 
+                />    
+                <label>Change Password</label>
+                <input 
+                    type='password' 
+                    name='password' 
+                    placeholder='New Password' 
+                    onChange={handleChange} 
+                />
+                <label>Confirm New Password</label>
+                <input 
+                    type='password' 
+                    name='confirmPassword' 
+                    placeholder='Confirm Password' 
+                    onChange={handleChange} 
+                />
+
                 <p>Player Information</p>
-                <input type='text' name='firstName' placeholder={currentUser.firstName} value={values.firstName} onChange={handleChange} />
-                <input type='text' name='lastName' placeholder={currentUser.lastName} value={values.lastName} onChange={handleChange} />
-                <div className="hometown-state">
-                    <input type='text' name='hometown' placeholder={currentUser.hometown} value={values.hometown} onChange={handleChange} />
-                    <input className="state-input" list='states' name='state' placeholder={currentUser.state} value={values.state} onChange={handleChange} />
-                        <AllStates />
-                </div>
+                <label>First Name</label>
+                <input 
+                    type='text' 
+                    name='firstName' 
+                    placeholder={currentUser.firstName} 
+                    onChange={handleChange} 
+                />
+                <label>Last Name</label>
+                <input 
+                    type='text' 
+                    name='lastName' 
+                    placeholder={currentUser.lastName} 
+                    onChange={handleChange} 
+                />
+                <label>Hometown</label>    
+                <input 
+                    type='text' 
+                    name='hometown' 
+                    placeholder={currentUser.hometown} 
+                    onChange={handleChange} 
+                />
+                <label>State</label>    
+                <input 
+                    className="state-input" 
+                    list='states' 
+                    name='state' 
+                    placeholder={currentUser.state} 
+                    onChange={handleChange} 
+                />
+                    <AllStates />
                     <label>Status: </label>
                 <div className="pro-am">
-                    Professional <input type="radio" name='status' value="professional" onChange={handleChange}/>
-                    Amateur <input type="radio" name='status' value="amateur" onChange={handleChange}/>
+                    Professional <input 
+                                    type="radio" 
+                                    name='status' 
+                                    value="professional" 
+                                    onChange={handleChange}
+                                />
+                    Amateur <input 
+                                type="radio" 
+                                name='status' 
+                                value="amateur" 
+                                onChange={handleChange}
+                            />
                 </div>
                 <p>Membership</p>                    
                 <select name='member' onChange={handleChange}>
@@ -140,7 +196,7 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
                     <option value='true'>Annual Membership ($412.00)</option>
                 </select>
                 {
-                    currentUser.member === "true"
+                    values.member === "true"
                     && <div className="payment-options">
                         <label>Pay By </label>
                         <button>via PayPal</button> 
@@ -148,8 +204,8 @@ const PlayerProfile = ({props: { currentUser, setCurrentUser, logged}}) => {
                         <button>Check</button>
                     </div>
                 }
-                <button type="submit" className="edit-btn">Save Changes</button>
-            </form>
+                <SaveButton type="submit" onClick={() => setEditProfileModal(false)}>Save Changes</SaveButton>
+            </EditForm>
         </Modal>
         </>
     )

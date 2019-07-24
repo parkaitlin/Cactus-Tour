@@ -15,7 +15,7 @@ const Schedule = ({ props: { logged, setLogged, currentUser, setCurrentUser } })
     const [eventId, setEventId] = useState(0);
     const [eventNum, setEventNum] = useState(0);
 
-    const eventActions = async (e) => {
+    const eventActions = async () => {
         try {
             const inputs = {
                 eventStartDate: values.eventStartDate,
@@ -62,7 +62,6 @@ const Schedule = ({ props: { logged, setLogged, currentUser, setCurrentUser } })
             }
         });
         const parsedData = await data.json();
-        console.log(parsedData);
         setSelectedTour(tours[index]);
         sessionStorage.setItem('currentUser', JSON.stringify(parsedData.user));
     }
@@ -70,7 +69,6 @@ const Schedule = ({ props: { logged, setLogged, currentUser, setCurrentUser } })
     const {values, setValues, handleChange, handleSubmit } = useForm(eventActions);
     
     useEffect(() => {
-        console.log('useEffect');
         const getTours = async () => {
             const data = await fetch('/tour/all', {
                 credentials: 'include',
@@ -84,6 +82,7 @@ const Schedule = ({ props: { logged, setLogged, currentUser, setCurrentUser } })
             setLogged(sessionStorage.getItem('logged'));
             setCurrentUser(JSON.parse(sessionStorage.getItem('currentUser')));
         }
+
         getTours();
     }, [values, showEditModal, selectedTour, setCurrentUser, setLogged]);
 

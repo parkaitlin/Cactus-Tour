@@ -66,7 +66,7 @@ module.exports = {
     },
     logout: async (req, res)=>{
         try {
-            req.session.destroy
+            req.session.destroy();
             res.json({
                 messaged: 'You have successfully logged out.'
             })

@@ -79,7 +79,6 @@ const Member = ({ props: { history, logged, setLogged, existingUser, setExisting
                                 type='text' 
                                 name='email' 
                                 placeholder='email' 
-                                value={values.email} 
                                 onChange={handleChange} 
                             />
                             <br/>
@@ -87,7 +86,6 @@ const Member = ({ props: { history, logged, setLogged, existingUser, setExisting
                                 type='password' 
                                 name='password' 
                                 placeholder='password' 
-                                value={values.password} 
                                 onChange={handleChange} 
                             />
                             <button type="submit">Login</button>
@@ -147,21 +145,18 @@ const Member = ({ props: { history, logged, setLogged, existingUser, setExisting
                                 type='text' 
                                 name='email' 
                                 placeholder='email' 
-                                value={values.email} 
                                 onChange={handleChange} 
                             />
                             <input 
                                 type='password' 
                                 name='password' 
                                 placeholder='password' 
-                                value={values.password} 
                                 onChange={handleChange} 
                             />
                             <input 
                                 type='password' 
                                 name='confirmPassword' 
                                 placeholder='confirm password' 
-                                value={values.confirmPassword} 
                                 onChange={handleChange} 
                             />
                             <p>Player Information</p>
@@ -169,14 +164,12 @@ const Member = ({ props: { history, logged, setLogged, existingUser, setExisting
                                 type='text' 
                                 name='firstName' 
                                 placeholder='first name' 
-                                value={values.firstName} 
                                 onChange={handleChange} 
                             />
                             <input 
                                 type='text' 
                                 name='lastName' 
                                 placeholder='last name' 
-                                value={values.lastName} 
                                 onChange={handleChange} 
                             />
                             <div className="hometown-state">
@@ -184,7 +177,6 @@ const Member = ({ props: { history, logged, setLogged, existingUser, setExisting
                                     type='text' 
                                     name='hometown' 
                                     placeholder='hometown' 
-                                    value={values.hometown} 
                                     onChange={handleChange} 
                                     />
                                 <input 
@@ -192,7 +184,6 @@ const Member = ({ props: { history, logged, setLogged, existingUser, setExisting
                                     list='states' 
                                     name='state' 
                                     placeholder='state' 
-                                    value={values.state} 
                                     onChange={handleChange} 
                                 />
                                     <AllStates />
