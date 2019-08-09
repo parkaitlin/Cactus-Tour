@@ -14,12 +14,13 @@ module.exports = {
                 })
             } catch (error){
                 res.json({
-                    error: error
+                    error: error,
+                    message: 'An account with that email already exists.'
                 })
             }
         } else {
             res.json({
-                message: 'passwords do not match.'
+                message: 'Passwords do not match.'
             })
         }
     },
@@ -40,27 +41,25 @@ module.exports = {
         try {
             const foundUser = await User.findOne({email: req.body.email})
             if(foundUser.validPassword(req.body.password)){
-                req.session.message = 'login successful';
                 req.session.userDbId = foundUser._id;
 
                 res.json({
                     status: 200,
                     verified: true,
                     user: foundUser,
-                    session: req.session
+                    message: 'Login Successful'
                 })
             } else {
                 req.session.message = 'Unfortunately the login information provided, does not match our records. Please try again.'
                 res.json({
-                    data: 'invalid password',
+                    data: 'Invalid Password',
                     message: req.session.message
                 })
             }
         } catch (error) {
-            req.session.message = 'Unfortunately the login information provided, does not match our records. Please try again.'
             res.json({
                 error: error,
-                message: req.session.message
+                message: 'Unfortunately the email provided, does not match any of our records. Please try again.'
             })
         }
     },

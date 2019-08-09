@@ -16,9 +16,6 @@ export const Bar = styled.div`
     align-items: flex-end;
     justify-content: space-between;
   }
-  /* .login-link {
-    align-self: flex-end;
-  } */
   .left-col > .navbar-link > img {
     height: 13vh;
     width: auto;
@@ -66,4 +63,29 @@ export const Bar = styled.div`
       transform: rotate(-60deg);
     }
   }
+`
+
+export const Message = styled.div`
+  background-color: #fff;
+  height: 4em;
+  .hide {
+    visibility: hidden
+  }
+  .show {
+    visibility: visible
+  }
+
+  @keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
 `

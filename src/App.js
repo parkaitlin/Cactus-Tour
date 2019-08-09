@@ -22,7 +22,14 @@ const App = props => {
 
   return (
     <div className="App">
-      <Navbar logged={logged} setExistingUser={setExistingUser} setCurrentUser={setCurrentUser} setLogged={setLogged} message={message} />
+      <Navbar 
+        logged={logged} 
+        setExistingUser={setExistingUser} 
+        setCurrentUser={setCurrentUser} 
+        setLogged={setLogged} 
+        message={message} 
+        setMessage={setMessage} 
+      />
       <Switch>
         <Route 
           exact path={routes.HOME} 
@@ -30,7 +37,7 @@ const App = props => {
         />
         <Route 
           exact path={routes.MEMBER} 
-          render={props => <Member props={{ ...props, logged, setLogged, existingUser, setExistingUser, currentUser, setCurrentUser}} />}
+          render={props => <Member props={{ ...props, setLogged, existingUser, setExistingUser, setCurrentUser, setMessage}} />}
         />
         <Route 
           exact path={routes.SCHEDULE} 

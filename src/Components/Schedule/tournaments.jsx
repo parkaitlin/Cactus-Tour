@@ -3,21 +3,6 @@ import { handleDate, handleMonth, handleTime } from '../timeAndDate';
 import { SmallButton } from '../../styles/Buttons';
 
 const TourSchedule = ({tours, selectedTour, setSelectedTour, setShowEditModal, setShowPlayerList, setEventNum, currentUser, setCurrentUser, logged, setValues, playerRegistration, setMessage}) => {
-    // const playerRegistration = async(index)=>{
-    //     try {
-    //         const data = await fetch(`/tour/registration/${tours[index]._id}`, {
-    //             credentials: 'include',
-    //             headers:{
-    //                 "Content-Type": "application/json"
-    //             }
-    //         });
-    //         const parsedData = await data.json();
-    //         console.log(parsedData);
-    //         setCurrentUser(parsedData.user);
-    //     } catch (error) {
-    //         throw new Error(error);
-    //     } 
-    // }
 
     const tournaments = tours.map((tour, i)=>{
         return(

@@ -3,8 +3,7 @@ import AllStates from './states';
 import useForm from '../useForm';
 import { NewUserForm, LoginBox } from '../../styles/MemberPage';
 
-const Member = ({ props: { history, logged, setLogged, existingUser, setExistingUser, currentUser, setCurrentUser} }) => {
-    const [message, setMessage] = useState("");
+const Member = ({ props: { history, setLogged, existingUser, setExistingUser, setCurrentUser, setMessage } }) => {
 
     const authenticate = async ()=>{
         try {
@@ -25,6 +24,8 @@ const Member = ({ props: { history, logged, setLogged, existingUser, setExisting
                 if(parsedData.verified === true){
                     setLogged(true);
                     setCurrentUser(parsedData.user);
+                    setMessage(parsedData.message);
+                
                     sessionStorage.setItem("logged", true);
                     sessionStorage.setItem('currentUser', JSON.stringify(parsedData.user));
                     history.push('/');
@@ -56,9 +57,13 @@ const Member = ({ props: { history, logged, setLogged, existingUser, setExisting
                 if(parsedData.created === true){
                     setLogged(true);
                     setCurrentUser(parsedData.user);
+                    setMessage(parsedData.message);
+
                     sessionStorage.setItem("logged", true);
                     sessionStorage.setItem('currentUser', JSON.stringify(parsedData.user));
                     history.push('/');
+                } else {
+                    setMessage(parsedData.message);
                 }
             }
         } catch (error) {
