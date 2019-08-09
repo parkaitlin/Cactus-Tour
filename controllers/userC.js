@@ -50,7 +50,6 @@ module.exports = {
             const user = await User.findById(req.session.userDbId)
             .populate('registeredTours')
             .exec()
-            console.log(user);
             res.json({
                 allTours: user.registeredTours,
             })

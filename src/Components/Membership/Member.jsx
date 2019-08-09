@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AllStates from './states';
 import useForm from '../useForm';
 import { NewUserForm, LoginBox } from '../../styles/MemberPage';
@@ -43,7 +43,6 @@ const Member = ({ props: { history, setLogged, existingUser, setExistingUser, se
                     state: values.state,
                     member: values.member,
                     status: values.status,
-                    admin: true
                 };
                 const data = await fetch('/auth/new', {
                     method: "POST",

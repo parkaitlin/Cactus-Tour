@@ -27,8 +27,8 @@ const App = props => {
         setExistingUser={setExistingUser} 
         setCurrentUser={setCurrentUser} 
         setLogged={setLogged} 
-        message={message} 
-        setMessage={setMessage} 
+        message={message}
+        setMessage={setMessage}
       />
       <Switch>
         <Route 

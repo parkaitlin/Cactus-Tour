@@ -70,7 +70,8 @@ module.exports = {
                 res.json({
                     status: 200,
                     user: user,
-                    tour: tour
+                    tour: tour,
+                    message: "You have unregistered for an event."
                 })
             } else {
                 console.log('register');
@@ -82,7 +83,8 @@ module.exports = {
                 res.json({
                     status: 200,
                     user: user,
-                    tour: tour
+                    tour: tour,
+                    message: "You are registered!"
                 })
             }
         } catch (error) {

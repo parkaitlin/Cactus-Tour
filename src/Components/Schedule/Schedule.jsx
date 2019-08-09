@@ -7,7 +7,7 @@ import { Exit, CancelButton, SaveButton, SmallButton } from '../../styles/Button
 import useForm from '../useForm';
 
 
-const Schedule = ({ props: { logged, setLogged, currentUser, setCurrentUser } }) => {
+const Schedule = ({ props: { logged, setLogged, currentUser, setCurrentUser, setMessage } }) => {
     const [showPlayerList, setShowPlayerList] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [tours, setTours] = useState([]);
@@ -55,14 +55,16 @@ const Schedule = ({ props: { logged, setLogged, currentUser, setCurrentUser } })
     }
     
     const playerRegistration = async(index)=>{
-        const data = await fetch(`/tour/registration/${tours[index]._id}`, {
+        const data = await fetch(`/tour/registration/${index}`, {
             credentials: 'include',
             headers:{
                 "Content-Type": "application/json"
             }
         });
         const parsedData = await data.json();
-        setSelectedTour(tours[index]);
+        setSelectedTour(tours.filter(tour => tour._id === index));
+        
+        setMessage(parsedData.message);
         sessionStorage.setItem('currentUser', JSON.stringify(parsedData.user));
     }
 

@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Bar = styled.div`
   background-color: rgb(230, 233, 235);
-  height: 18vh;
+  /* position: fixed; */
+  height: 9em;
   display: flex;
   padding: 15px;
 
@@ -42,17 +43,18 @@ export const Bar = styled.div`
   }
   .sun-logo {
     color: #777;
-    font-size: 2.5em;
-    margin-bottom: 1em;
+    font-size: 2em;
+    margin-bottom: .8em;
     animation: rotate 2.5s;
     animation-iteration-count: 2;
   }
   .sm-logo {
     color: #777;
-    height: 5vh;
+    height: 2em;
     width: auto;
     margin: 5px;
   }
+
   @keyframes rotate {
     0%, 100% {
       -webkit-transform: rotate(60deg);
@@ -65,27 +67,3 @@ export const Bar = styled.div`
   }
 `
 
-export const Message = styled.div`
-  background-color: #fff;
-  height: 4em;
-  .hide {
-    visibility: hidden
-  }
-  .show {
-    visibility: visible
-  }
-
-  @keyframes fadeInDown {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -100%, 0);
-    transform: translate3d(0, -100%, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-}
-`

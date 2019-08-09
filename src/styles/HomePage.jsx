@@ -4,7 +4,7 @@ export const HomePage = styled.div`
     .bgimg-1 {
         background-image: url('imgs/christoph-von-gellhorn-748872-unsplash.jpg');
         position: relative;
-        opacity: 0.65;
+        opacity: 0.7;
         background-attachment: fixed;
         background-position: center;
         background-repeat: no-repeat;

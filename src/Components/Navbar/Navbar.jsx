@@ -4,11 +4,10 @@ import * as routes from '../constants/routes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faSun} from '@fortawesome/free-regular-svg-icons';
 import { faFacebookSquare, faTwitterSquare } from '@fortawesome/free-brands-svg-icons';
-import { Bar, Message } from '../../styles/Bar';
-import { Exit } from '../../styles/Buttons'
+import Message from './message';
+import { Bar } from '../../styles/Bar';
 
 const Navbar = ({logged, setExistingUser, setCurrentUser, setLogged, message, setMessage})=> {
-    const showOrHide = !message === '' ? 'show' : 'hide'
     return(
         <>
             <Bar>
@@ -98,6 +97,7 @@ const Navbar = ({logged, setExistingUser, setCurrentUser, setLogged, message, se
                                 onClick={() => {
                                     setLogged(false); 
                                     setCurrentUser(null);
+                                    setMessage('Successfully Logged Out.')
                                     sessionStorage.clear();}}>
                                 Logout
                             </NavLink>
@@ -111,12 +111,8 @@ const Navbar = ({logged, setExistingUser, setCurrentUser, setLogged, message, se
                     }
                 </div>
             </Bar>
-            <Message>
-                <div className={showOrHide}>
-                    <Exit onClick={setMessage('')}>X</Exit>
-                </div>
-            </Message>
-        </> 
+            <Message message={message} setMessage={setMessage}/>
+        </>
     )
 }
 
