@@ -18,6 +18,8 @@
     "express-session": "^1.16.1",
     "http": "0.0.0",
     "http-errors": "^1.7.2",
+    "lodash": "^4.17.15",
+    "lodash.template": "^4.5.0",
     "mongoose": "^5.5.12",
     "morgan": "^1.9.1",
     "normalize-port": "^1.0.0",
