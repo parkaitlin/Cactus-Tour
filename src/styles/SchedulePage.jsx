@@ -43,6 +43,10 @@ export const ScheduleTable = styled.div`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        min-width: 28em;
+        > div {
+            width: 50%;
+        }
         > div > button {
             color: blue;
             background-color: transparent;
